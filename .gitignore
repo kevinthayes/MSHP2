@@ -1,0 +1,6 @@
+/idea/
+/venv/
+*.xml
+*.iml
+*.pyc
+*.swp

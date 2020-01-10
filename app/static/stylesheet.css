@@ -1,0 +1,126 @@
+/* Css Document */
+
+* {
+  margin: 0;
+  padding: 0;
+  background-color: #F7FFF7;
+}
+
+:focus {
+  outline: none;
+}
+
+html {
+  -ms-touch-action: none;
+}
+
+header {
+  position: absolute;
+  height: 0;
+}
+
+form {
+  background: none;
+}
+
+.request {
+  position: relative;
+  height: 150px;
+  width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  background-color: #312F2F;
+}
+
+.vehicle {
+  position: relative;
+  width: 500px;
+  font-size: 40px;
+  color: #F7FFF7;
+  background: transparent;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.vin {
+  position: relative;
+  width: 500px;
+  font-size: 25px;
+  color: #F7FFF7;
+  background: transparent;
+  font-family: 'Nunito Sans', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.customer {
+  position: relative;
+  width: 500px;
+  font-size: 25px;
+  color: #F7FFF7;
+  background: transparent;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.button-wrapper {
+  top: 50%;
+  transform: translateY(-50%);
+  position: absolute;
+  right: 0;
+  margin-right: 12px;
+  background: transparent;
+}
+
+.generics-wrapper {
+  top: 50%;
+  transform: translateY(-50%);
+  position: absolute;
+  left: 0;
+  margin-left: 12px;
+  background: transparent;
+}
+
+.multi-button {
+  position: relative;
+  height: 70px;
+  width: 200px;
+  font-size: 30px;
+  color: #FF00FF;
+  margin: 0;
+  border-color: #FF00FF;
+  border-width: 5px;
+  border-style: solid;
+  background: transparent;
+  cursor: pointer;
+  font-family: 'Nunito Sans', sans-serif;
+  transition: 0.2s;
+}
+
+.multi-button:active {
+  border-radius: 20px;
+}
+
+.accept, .accept:after {
+  content: "ACCEPT";
+  color: #7CA982;
+  border-color: #7CA982;
+}
+
+.deny, .deny:after {
+  content: "DENY";
+  color: #FF6542;
+  border-color: #FF6542;
+}
+
+.print, .print:after {
+  content: "PRINT";
+  color: #FCBA04;
+  border-color: #FCBA04;
+}
+
+.complete, .complete:after {
+  content: "COMPLETE";
+  color: #FCBA04;
+  border-color: #FCBA04;
+}
