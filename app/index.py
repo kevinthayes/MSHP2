@@ -1,9 +1,18 @@
 from flask import Blueprint, render_template, session
 from app.database import query_db
 import app.toolkit as EZ
+import app
+from app import validation
+from app import toolkit
+from flask import request
+from flask import flash
+from app.toolkit import setRepairCompleted
+from app.toolkit import setRepairAccepted
+from app.toolkit import getRepairAccepted
 
 bp = Blueprint("index", __name__)
 
+# PATHS ------------------------------------------------------------------------------------------------------
 
 #Way to fake-instantiate the database
 @bp.route("/functionTest", methods=["GET"])
@@ -43,4 +52,114 @@ def index():
     print("AFTTER:")
     return render_template("index.html")
 
+@bp.route('/')
+def form():
+    return render_template('login.html')
 
+@bp.route('/result', methods = ['POST','GET' ])
+def result():
+    if request.method == 'POST':
+        result = request.form.to_dict()
+        ok = "True"
+
+        if ok == "True":
+            ##if required fields arent filled out
+            if validation.hasData(result['customerName']) == 0:
+                print("required name")
+                flash("required name")
+
+                ok = "False"
+
+            if validation.hasData(result['customerEmail']) == 0:
+                print("required email")
+                flash("required email")
+                ok = "False"
+
+            if validation.hasData(result['repairType']) == 0:
+                print("required fields aint filled out")
+                flash("required repairType")
+                ok = "False"
+
+            ##require repairDescription if repair type is other
+            if result['repairType'] == "other":
+                if validation.hasData(result['repairDescription']) == 0:
+                    print("require repair description")
+                    flash("required email")
+                    ok = "False"
+
+            if validation.hasData(result['vin']) == 1:
+                ## if vin number is entered incorrerctly
+                if validation.vinNumber(result['vin']) == 0:
+                    flash("vin number is invalid")
+                    ok = "False"
+
+            ##check make
+            if validation.hasData(result['make']) == 0:
+                flash("Vehicle make is required")
+                ok = "False"
+            if validation.hasData(result['model']) == 0:
+                flash("Vehicle model is required")
+                ok = "False"
+            if validation.hasData(result['year']) == 0:
+                flash("Vehicle year is required")
+                ok = "False"
+
+                ##check if the email is correct
+            if validation.emailChecker(result['customerEmail']) == "False":
+                flash("Email is invalid")
+                print("this email is WRONG")
+
+            if ok == "True":
+                toolkit.publish(result)
+                render_template("success.html")
+
+    return render_template("login.html")
+
+# test email
+@bp.route("/test_sendEmail")
+def test_sendEmail():
+    #email template can be found at app/templates/testEmail.html
+    sendEmail("This is a test email!", render_template("testEmail.html"), "spkudrna@gmail.com")
+    return("email test succefully fired, check target inbox.")
+
+# admin console routes
+@bp.route("/admin")
+def adminConsole():
+    return(render_template("console.html", compliedData=toolkit.compileRequestData()))
+
+@bp.route("/admin", methods=['POST'])
+def processAdminRequest():
+    if request.form['side'] == 'L':
+        pass
+    if request.form['side'] == 'R':
+        pass
+
+@bp.route("/admin/L/<repairID>")
+def sinistra(repairID):
+    if getRepairAccepted(repairID) == True:
+        pass
+        #printForm(repairID)
+    else:
+        setRepairAccepted(repairID, True)
+        #sendAcceptEmail()
+    return(render_template("console.html", compliedData=toolkit.compileRequestData()))
+
+@bp.route("/admin/R/<repairID>")
+def destra(repairID):
+    if getRepairAccepted(repairID) == True:
+        setRepairCompleted(repairID, True)
+    else:
+        setRepairCompleted(repairID, True)
+        #sendRejectEmail()
+    return(render_template("console.html", compliedData=toolkit.compileRequestData()))
+
+# end admin paths
+
+#Route to purge the database... smart idea
+@bp.route("/purge/database/<secretKey>")
+def seanThinksThisIsInsaneAndHeIsCorrect(secretKey):
+    if secretKey == app.config['SECRET_KEY']:
+        toolkit.BIG_RED_BUTTON()
+        return("bye bye...")
+    else:
+        return("nope.")
