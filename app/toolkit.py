@@ -181,13 +181,13 @@ def setRepairDescription(repID, repairDescription):
     return("repair description has been updated to " + repairDescription)
 
 def setRepairAccepted(repID, accepted):
-    mySQL = concantenate("repair", "accepted", accepted)
+    mySQL = concantenate("repair", "accepted", str(accepted))
     query_db(mySQL, (int(repID),))
-    return("status has been updated to " + accepted)
+    return("status has been updated to " + str(accepted))
 def setRepairCompleted(repID, completed):
-    mySQL = concantenate("repair", "completed", completed)
+    mySQL = concantenate("repair", "completed", str(completed))
     query_db(mySQL, (int(repID),))
-    return("status has been updated to " + completed)
+    return("status has been updated to " + str(completed))
 
 
 #THE CREATORS

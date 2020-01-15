@@ -134,7 +134,7 @@ def processAdminRequest():
     if request.form['side'] == 'R':
         pass
 
-@bp.route("/admin/L/<repairID>")
+@bp.route("/admin/L/<repairID>", methods=['GET', 'POST'])
 def sinistra(repairID):
     if getRepairAccepted(repairID) == True:
         pass
@@ -144,7 +144,7 @@ def sinistra(repairID):
         #sendAcceptEmail()
     return(render_template("console.html", compliedData=toolkit.compileRequestData()))
 
-@bp.route("/admin/R/<repairID>")
+@bp.route("/admin/R/<repairID>", methods=['GET', 'POST'])
 def destra(repairID):
     if getRepairAccepted(repairID) == True:
         setRepairCompleted(repairID, True)

@@ -1,6 +1,7 @@
 PROJECT OVERVIEW:
 The purpose of this project is to create a functional autoshop website through which potential customers can insert their information and requested repairs, and through which the website administrator can accept and reject these repairs, mark these repairs completed or incomplete, send emails informing customers of the state of their repair requests, and print the necessary forms surrounding the repairs.
 
+IMPORTS: BareNecessities and Mail
 
 FILES AND THEIR PURPOSE:
 app.py
