@@ -16,7 +16,7 @@ bp = Blueprint("index", __name__)
 
 #Way to fake-instantiate the database
 @bp.route("/functionTest", methods=["GET"])
-def index():
+def functiontest():
     # Something in order troubleshoot: literally calling just about everything in the file. (May have to re-instantiate the database from dummyTester.py because no vin and things yet.
     entries = query_db("""
         SELECT customers.customerName, customers.customerEmail, vehicles.make, vehicles.model, repairs.repairType, repairs.repairId
@@ -50,13 +50,18 @@ def index():
         print("Repair ID:",repairId, "\nRepair Type:",EZ.getRepairType(repairId))
 
     print("AFTTER:")
-    return render_template("index.html")
+    return render_template("login.html")
 
 @bp.route('/')
-def form():
+def index():
+    return render_template('index.html')
+
+@bp.route('/login.html')
+def login():
     return render_template('login.html')
 
-@bp.route('/result', methods = ['POST','GET' ])
+
+@bp.route('/result', methods = ['POST', 'GET'])
 def result():
     if request.method == 'POST':
         result = request.form.to_dict()
@@ -134,7 +139,7 @@ def processAdminRequest():
     if request.form['side'] == 'R':
         pass
 
-@bp.route("/admin/L/<repairID>", methods=['GET', 'POST'])
+@bp.route("/admin/L/<repairID>", methods=['POST'])
 def sinistra(repairID):
     if getRepairAccepted(repairID) == True:
         pass
@@ -144,7 +149,7 @@ def sinistra(repairID):
         #sendAcceptEmail()
     return(render_template("console.html", compliedData=toolkit.compileRequestData()))
 
-@bp.route("/admin/R/<repairID>", methods=['GET', 'POST'])
+@bp.route("/admin/R/<repairID>", methods=['POST'])
 def destra(repairID):
     if getRepairAccepted(repairID) == True:
         setRepairCompleted(repairID, True)
