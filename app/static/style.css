@@ -1,3 +1,14 @@
 body {
     font-family: 'Nunito Sans', sans-serif;
+    margin-left: 20px;
+}
+
+a:visited {
+    text-decoration: none;
+    color: green;
+}
+
+a:hover {
+    text-decoration: none;
+    color: red;
 }
