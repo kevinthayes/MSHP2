@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -13,8 +13,10 @@
 	</head>
 
 	<body>
-		<h1>NCHS Auto Shop</h1><br>
-		<a href="{{ url_for('index.adminConsole') }}">admin panel</a><br>
-		<a href="{{ url_for('index.login') }}">submit a repair request</a>
+		<h1>NCHS AUTO SHOP</h1><br>
+		<div class = "row">
+			<div class = "column"><a href="{{ url_for('index.adminConsole') }}">admin login</a><br></div>
+			<div class = "column"><a href="{{ url_for('index.login') }}">submit a repair request</a></div>
+		</div>
 	</body>
 </html>
