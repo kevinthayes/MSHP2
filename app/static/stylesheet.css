@@ -1,8 +1,45 @@
 /* Css Document */
+body {
+    font-family: 'Nunito Sans', sans-serif;
+    margin: 0px;
+}
+
+.title {
+    color: #920404;
+    background-color: grey;
+    text-align: center;
+    padding-bottom: 50px;
+    padding-top: 50px;
+    margin: 0px;;
+}
+
+
+
+.row {
+  display: flex;
+  text-align: center;
+}
+
+.column {
+  flex: 50%;
+}
+
+a:visited, a:link {
+    text-decoration: none;
+    padding: 10px;
+    color: #920404;
+}
+
+a:hover {
+    text-decoration: none;
+    padding: 10px;
+    background-color: lightgrey;
+}
+
 * {
   margin: 0;
   padding: 0;
-  background-color: #F7FFF7;
+  background-color: #F7FFF7; /* green */
 }
 
 :focus {
@@ -30,14 +67,14 @@ form {
   margin-right: auto;
   margin-top: 1em;
   margin-bottom: 1em;
-  background-color: #312F2F;
+  background-color: grey;
 }
 
 .vehicle {
   position: relative;
   width: 500px;
   font-size: 40px;
-  color: #F7FFF7;
+  color: #920404; /* spicy red */
   background: transparent;
   font-family: 'Nunito Sans', sans-serif;
 }
@@ -46,7 +83,7 @@ form {
   position: relative;
   width: 500px;
   font-size: 25px;
-  color: #F7FFF7;
+  color: #920404; /* spicy red */
   background: transparent;
   font-family: 'Nunito Sans', sans-serif;
   text-transform: uppercase;
@@ -57,7 +94,7 @@ form {
   position: relative;
   width: 500px;
   font-size: 25px;
-  color: #F7FFF7;
+  color: #F7FFF7; /* green */
   background: transparent;
   font-family: 'Nunito Sans', sans-serif;
 }
@@ -85,9 +122,9 @@ form {
   height: 70px;
   width: 200px;
   font-size: 30px;
-  color: #FF00FF;
+  color: grey; /* ugly purple */
   margin: 0;
-  border-color: #FF00FF;
+  border-color: grey; /* ugly purple */
   border-width: 5px;
   border-style: solid;
   background: transparent;
@@ -102,8 +139,8 @@ form {
 
 .accept, .accept:after {
   content: "ACCEPT";
-  color: #7CA982;
-  border-color: #7CA982;
+  color: #7CA982; /* mint */
+  border-color: #7CA982; /* mint */
 }
 
 .deny, .deny:after {
@@ -114,13 +151,13 @@ form {
 
 .print, .print:after {
   content: "PRINT";
-  color: #FCBA04;
-  border-color: #FCBA04;
+  color: #FCBA04; /* earwax - not really sure when this is used */
+  border-color: #FCBA04; /* earwax - not really sure when this is used */
 }
 
 .complete, .complete:after {
   content: "COMPLETE";
-  color: #FCBA04;
+  color: #FCBA04; /* earwax - not really sure when this is used */
   border-color: #FCBA04;
 }
 
