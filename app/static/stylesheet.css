@@ -1,5 +1,5 @@
 /* Css Document */
-body {
+.body {
     font-family: 'Nunito Sans', sans-serif;
     margin: 0px;
 }
@@ -12,8 +12,6 @@ body {
     padding-top: 50px;
     margin: 0px;;
 }
-
-
 
 .row {
   display: flex;
@@ -159,6 +157,10 @@ form {
   content: "COMPLETE";
   color: #FCBA04; /* earwax - not really sure when this is used */
   border-color: #FCBA04;
+}
+
+.space {
+    margin: 10px;
 }
 
 
