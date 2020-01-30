@@ -24,8 +24,8 @@ with app.app_context():
     mail = Mail(app)
     app.config['MAIL_SERVER'] = 'smtp.gmail.com' #This sends requst to google
     app.config['MAIL_PORT'] = 465 #This is required for the server
-    app.config['MAIL_USERNAME'] = 'nchsauto@gmail.com' #Associates sender address
-    app.config['MAIL_PASSWORD'] = 'nchsautomail' #Validates sender with password
+    app.config['MAIL_USERNAME'] = 'NCHS.autoshop@gmail.com' #Associates sender address
+    app.config['MAIL_PASSWORD'] = 'nchsautowebsite' #Validates sender with password
     app.config['MAIL_USE_TLS'] = False
     app.config['MAIL_USE_SSL'] = True
     mail = Mail(app)
