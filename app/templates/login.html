@@ -3,33 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Repair Submission Form</title>
+    <link rel="stylesheet" href="static/stylesheet.css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:900" rel="stylesheet">
 </head>
 <body>
+    <div id = "body">
+        <h1 class = "title">NCHS AUTO SHOP</h1><br>
+		<div class = "row">
+			<div class = "column"><a href="{{ url_for('index.adminConsole') }}">admin login</a><br></div>
+			<div class = "column"><a href="{{ url_for('index.login') }}">submit a repair request</a></div>
+		</div>
+    </div>
+    <div class = "space">
     <form action = "http://localhost:5000/result" method = "POST" >
-        <p>Name: <input type = "text" name = "customerName" /> <p>
-        <p>Email: <input type = "text" name = "customerEmail" /> </p>
-        <p>Phone Number: <input type = "text" name = "customerPhoneNum" /> </p>
+        <p>Name: <input type = "text" name = "customerName" /> <p> <br>
+        <p>Email: <input type = "text" name = "customerEmail" /> </p><br>
+        <p>Phone Number: <input type = "text" name = "customerPhoneNum" /> </p><br>
 	<fieldset>
             <legend>Vehicle</legend>
-            <p>Make: <input type = "text" name = "make" /></p>
-            <p>Model: <input type = "text" name = "model" /> </p>
-            <p>Year: <input type = "text" name = "year" /> </p>
-            <p>OR</p>
-            <p>Vin Number: <input type = "text" name = "vin" /> </p>
+            <p>Make: <input type = "text" name = "      make" /></p><br>
+            <p>Model: <input type = "text" name = "     model" /> </p><br>
+            <p>Year: <input type = "text" name = "      year" /> </p><br>
+            <p>     OR</p><br>
+            <p>Vin Number: <input type = "text" name = "       vin" /> </p><br>
         </fieldset>
 	<fieldset>
-            <legend>Repair</legend>
-            <select name  ="repairType">
+            <legend>Repair</legend><br>
+            <select name  ="repairType"><br>
 		    <option> </option>
-		    <option value = "oilchange">Oil Change</option>
-		    <option value = "brakes"> Brake Replacement</option>
-		    <option value = "other"> Other</option>
+		    <option value = "oilchange">Oil Change</option><br>
+		    <option value = "brakes"> Brake Replacement</option><br>
+		    <option value = "other"> Other</option><br>
             </select>
-            <p>Describe Your Repair</p>
+            <p>Describe Your Repair</p><br>
 	    <textarea name = "repairDescription" rows="10" cols="30">
             </textarea>
         </fieldset>
-        <p><input type = "submit" value = "submit"></p>
+        <p><input type = "submit" value = "submit"></p><br>
     </form>
     <!--
     {% with errorMessages = get_flashed_messages() %}
@@ -42,5 +52,6 @@
 	{% endif %}
     {% endwith %}
     -->
+    </div>
 </body>
 </html>
