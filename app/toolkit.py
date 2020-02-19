@@ -21,6 +21,7 @@ import array
 #---------------------------------------------------------------
 
 #Get ALL RepairIds
+
 def getRepairIds():
     #array for all the repairIds
     myIds = []
@@ -164,7 +165,7 @@ def setVehicleYear(vehID, year):
     return("year has been updated to " + year)
 
 def setVehicleVin(vehID, vin2):
-    mySQL = concantentate("vehicle","vin2",vin2)
+    mySQL = concantenate("vehicle","vin2",vin2)
     query_db(mySQL, (int(vehID),))
     return ("vin has been updated to " + vin2)
 
@@ -250,7 +251,7 @@ def BIG_RED_BUTTON():
 
 #Remove repair
 def RemoveRepair(repID):
-    query_db("DELETE FROM repairs WHERE repairId = ?", (int(repID),))
+    query_db("UPDATE repairs SET state==rejected WHERE repairId = ?", (int(repID),))
     return "Repair has been deleted"
 
 #Remove vehicle
@@ -271,6 +272,15 @@ def RemoveCustomer(cusID):
     query_db("DELETE FROM customers WHERE customerId = ?", (int(cusID),))
     return "Customer has been deleted"
 
+#Purges all rejected repairs
+def PurgeRejected():
+    query_db("DELETE FROM vehicles WHERE state==rejected")
+    return
+
+#Restores rejected repairs
+def RestoreRejected(repID):
+    query_db("UPDATE repairs SET state = pending WHERE repairID = ?",(int(repID),))
+    return
 #PUBLISH FORM DATA TO THE DATABASE
 def publish(formInfo):
 
