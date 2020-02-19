@@ -15,7 +15,7 @@
 		</div>
     </div>
     <div class = "space">
-    <form action = "http://localhost:5000/result" method = "POST" >
+    <form action = "{{ url_for('index.result') }}" method = "POST" >
         <p>Name: <input type = "text" name = "customerName" /> <p> <br>
         <p>Email: <input type = "text" name = "customerEmail" /> </p><br>
         <p>Phone Number: <input type = "text" name = "customerPhoneNum" /> </p><br>

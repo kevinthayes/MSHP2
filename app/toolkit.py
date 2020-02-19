@@ -164,7 +164,7 @@ def setVehicleYear(vehID, year):
     return("year has been updated to " + year)
 
 def setVehicleVin(vehID, vin2):
-    mySQL = concantentate("vehicle","vin2",vin2)
+    mySQL = concantenate("vehicle","vin2",vin2)
     query_db(mySQL, (int(vehID),))
     return ("vin has been updated to " + vin2)
 

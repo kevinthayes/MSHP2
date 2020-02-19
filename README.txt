@@ -7,8 +7,6 @@ FILES AND THEIR PURPOSE:
 app.py
 	Mailing
 		Establishes connection with google's mailing server to allow for automated emailing from the website to customers about requests.
-	Routing
-		How to naviate between pages on the website.
 	Forms
 		Using functions in validation.py, validate information given by the user by the rendered html form login.html
 	Admin Console
@@ -25,7 +23,9 @@ app (folder)
 	database.py
 		This is the file in which the python methods exist that you can use to interact with the database. The imports are sqlite3, click, os, from flask import current_app, g, from flask.cli import with_appcontext. The methods are get_db(), query_db(query, args=(), one=False), close_db(exception=None), init_db(), init_app(myApp), inidb_command()
 	index.py
-		This is the file that was used to test the code, specifically the database code. You can write testing methods with special Flask code, but it’s kind of a pain in the butt, so it’s just easier to create a route and call that to test  your stuff. 
+		This is the file that was used to test the code, specifically the database code. You can write testing methods with special Flask code, but it’s kind of a pain in the butt, so it’s just easier to create a route and call that to test  your stuff.
+        Routing
+            How to naviate between pages on the website.
 	__init__.py
 		This has your create_app(test_config=None) function, which is really important in regards to getting the app context in the rest of your files. Be sure to include it. It’s also where you import/register blueprints.
 	schema.sql
