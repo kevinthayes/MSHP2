@@ -9,7 +9,9 @@
 		<link rel="stylesheet" href="static/stylesheet.css">
 
 		<title>NCHS Auto Shop</title>
-
+ 		<meta name="google-signin-scope" content="profile email">
+  	  <meta name="google-signin-client_id" content="1041287326155-562rv0qqt7banjk8l1uug7c3loualikj.apps.googleusercontent.com">
+  	  <script src="https://apis.google.com/js/platform.js" async defer></script>
 	</head>
 
 	<body>
@@ -18,5 +20,22 @@
 			<div class = "column"><a href="{{ url_for('index.adminConsole') }}">admin login</a><br></div>
 			<div class = "column"><a href="{{ url_for('index.login') }}">submit a repair request</a></div>
 		</div>
+	<div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+    <script>
+      function onSignIn(googleUser) {
+        // Useful data for your client-side scripts:
+        var profile = googleUser.getBasicProfile();
+        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+        console.log('Full Name: ' + profile.getName());
+        console.log('Given Name: ' + profile.getGivenName());
+        console.log('Family Name: ' + profile.getFamilyName());
+        console.log("Image URL: " + profile.getImageUrl());
+        console.log("Email: " + profile.getEmail());
+
+        // The ID token you need to pass to your backend:
+        var id_token = googleUser.getAuthResponse().id_token;
+        console.log("ID Token: " + id_token);
+      }
+    </script>
 	</body>
 </html>
