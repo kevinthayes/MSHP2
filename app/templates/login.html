@@ -15,17 +15,17 @@
 		</div>
     </div>
     <div class = "space">
-    <form action = "http://localhost:5000/result" method = "POST" >
+    <form action = "{{ url_for('index.result') }}" method = "POST" >
         <p>Name: <input type = "text" name = "customerName" /> <p> <br>
         <p>Email: <input type = "text" name = "customerEmail" /> </p><br>
         <p>Phone Number: <input type = "text" name = "customerPhoneNum" /> </p><br>
 	<fieldset>
             <legend>Vehicle</legend>
-            <p>Make: <input type = "text" name = "      make" /></p><br>
-            <p>Model: <input type = "text" name = "     model" /> </p><br>
-            <p>Year: <input type = "text" name = "      year" /> </p><br>
+            <p>Make: <input type = "text" name = "make" /></p><br>
+            <p>Model: <input type = "text" name = "model" /> </p><br>
+            <p>Year: <input type = "text" name = "year" /> </p><br>
             <p>     OR</p><br>
-            <p>Vin Number: <input type = "text" name = "       vin" /> </p><br>
+            <p>Vin Number: <input type = "text" name = "vin" /> </p><br>
         </fieldset>
 	<fieldset>
             <legend>Repair</legend><br>
