@@ -56,6 +56,7 @@ PLATFORM REQUIREMENTS:
 
 
 SEQUENTIAL INSTALLATION INSTRUCTIONS:
+**Download PyCharm and install everything on that. It has its own console and terminal. Also it can display html**
 	General Dependencies (Install First)
 		python 3 (or greater), Flask, flaskMail, pdfkit (if implementing PDF functionality)
 	Dependencies for Database:
@@ -66,14 +67,15 @@ INSTALL FROM GITHUB:
 
 
 USING PROJECT:
-	How to Configure Project:
-		Project should be pre-configured on the server.
-	How to Run Project:
-		From the customer end…
-			Launch the url: {{INSERT URL HERE}}
-		From the administration end…
-			Launch the url: {{INSERT URL HERE}}
-		(Note: We won't know the final urls until the site gets hosted, which hasn't currently happened yet. Stay tuned.)
+	How to configure the project:
+		Log into pythonanywhere.com
+			user: nchsautoshop
+			password: Redhawks2020
+	How to run the project:
+		If you have the website running, type in nchsautoshop.pythonanywhere.com (so far)
+		
+		
+	
 		
 		
 CHANGES FOR THE FUTURE:
