@@ -35,8 +35,11 @@ CREATE TABLE repairs(
     repairId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     repairType TEXT NOT NULL,
     repairDescription TEXT,
-    state ENUM ('completed','rejected','in_Progress','pending'),
+    accepted BOOLEAN,
+    rejected BOOLEAN,
+    completed BOOLEAN,
     vehicleId INT NOT NULL,
     FOREIGN KEY(vehicleId) REFERENCES vehicles(vehicleId)
     );
+
 

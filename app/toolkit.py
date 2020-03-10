@@ -112,8 +112,13 @@ def getRepairAccepted(repID):
 def getRepairCompleted(repID):
 
     r =  query_db("SELECT completed FROM repairs WHERE repairId = ?", (int(repID),), True)
-    return r["completed"]  
-    
+    return r["completed"]
+
+def getRepairRejected(repID):
+
+    r =  query_db("SELECT rejected FROM repairs WHERE repairId = ?", (int(repID),), True)
+    return r["rejected"]
+
 
 
 #SETTERS
@@ -185,11 +190,25 @@ def setRepairAccepted(repID, accepted):
     mySQL = concantenate("repair", "accepted", str(accepted))
     query_db(mySQL, (int(repID),))
     return("status has been updated to " + str(accepted))
+
 def setRepairCompleted(repID, completed):
     mySQL = concantenate("repair", "completed", str(completed))
     query_db(mySQL, (int(repID),))
     return("status has been updated to " + str(completed))
 
+def setRepairCompleted(repID, completed):
+    mySQL = concantenate("repair", "completed", str(completed))
+    query_db(mySQL, (int(repID),))
+    return("status has been updated to " + str(completed))
+
+def setRepairCompleted(repID, completed):
+    mySQL = concantenate("repair", "completed", str(completed))
+    query_db(mySQL, (int(repID),))
+    return("status has been updated to " + str(completed))
+
+#def setRepairState(repID, status):
+#    mySQL = concantenate("repair","status",status)
+#    return("The repair is currently +"+ status)
 
 #THE CREATORS
 #These are how you insert new items into the database. These will...
@@ -219,13 +238,15 @@ def createVehicle(make = None,
 
 def createRepair(repairType,
                     repairDescription = None,
-                    accepted = None,
+                    accepted = False,
                     completed = False,
+                    rejected = False,
+                    #status = "pending",
                     vehicleId = 'default'):
     #If vehicleId isn't specified, gets the most recent one
     if (vehicleId == 'default'):
         getId = query_db("SELECT vehicleId FROM vehicles ORDER BY vehicleId DESC", one = True)
-    query_db("INSERT INTO repairs (repairType, repairDescription, accepted, completed, vehicleId) VALUES(?,?,?,?,?)", (repairType, repairDescription, accepted, completed, getId['vehicleId']))
+    query_db("INSERT INTO repairs (repairType, repairDescription, accepted, completed, vehicleId) VALUES(?,?,?,?,?)", (repairType, repairDescription, status, getId['vehicleId']))
     return "Repair has been created."
 
 #BIG RED BUTTON FUNCTIONS
@@ -240,6 +261,7 @@ def BIG_RED_BUTTON():
         vehId = getAssociatedVehicle(repId)
         cusId = getAssociatedCustomer(vehId)
         RemoveCustomer(cusId)
+        PurgeRejected()
 
     return ("Data whipe completed") #Sean is great at spelling.
 
@@ -251,7 +273,7 @@ def BIG_RED_BUTTON():
 
 #Remove repair
 def RemoveRepair(repID):
-    query_db("UPDATE repairs SET state==rejected WHERE repairId = ?", (int(repID),))
+    query_db("UPDATE repairs SET status==rejected WHERE repairId = ?", (int(repID),))
     return "Repair has been deleted"
 
 #Remove vehicle
@@ -274,12 +296,12 @@ def RemoveCustomer(cusID):
 
 #Purges all rejected repairs
 def PurgeRejected():
-    query_db("DELETE FROM vehicles WHERE state==rejected")
+    query_db("DELETE FROM vehicles WHERE rejected = True")
     return
 
 #Restores rejected repairs
 def RestoreRejected(repID):
-    query_db("UPDATE repairs SET state = pending WHERE repairID = ?",(int(repID),))
+    query_db("UPDATE repairs SET rejected = false WHERE repairID = ?",(int(repID),))
     return
 #PUBLISH FORM DATA TO THE DATABASE
 def publish(formInfo):
@@ -332,21 +354,21 @@ def compileRequestData():
         U_DLS = "excluded"
         U_DRS = "excluded"
         U_DDS = True
-        if getRepairAccepted(repairID) == True:
-            if getRepairCompleted(repairID) == True:
+        if getRepairAccepted(repairID) == "True":
+            if getRepairCompleted(repairID) == "True":
                 U_DLS = "excluded"
                 U_DRS = "excluded"
                 U_DDS = False
-            if getRepairCompleted(repairID) == False:
+            if getRepairCompleted(repairID) != "True":
                 U_DLS = "print"
                 U_DRS = "complete"
                 U_DDS = True
-        if getRepairAccepted(repairID) == False:
-            if getRepairCompleted(repairID) == True:
+        if getRepairAccepted(repairID) != "True":
+            if getRepairCompleted(repairID) == "True":
                 U_DLS = "excluded"
                 U_DRS = "excluded"
                 U_DDS = False
-            if getRepairCompleted(repairID) == False:
+            if getRepairCompleted(repairID) != "True":
                 U_DLS = "accept"
                 U_DRS = "deny"
                 U_DDS = True
