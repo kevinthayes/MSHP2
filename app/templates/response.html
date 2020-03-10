@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Responses</title> <!-- Everything else is missing the getters-->
+</head>
+<body>
+<h1>Email Templates</h1>
+
+<form action= "/app.py" method="post">
+<!-- This is code for each individual response from feid to the customer -->
+<fieldset>  <!-- When it is waiting to be accepted, he can accept or deny it-->
+            <legend>Accepted Email Template</legend>
+            <select name  ="CCR"> <!-- Cookie cutter responses -->
+		    <option value = "Sorry"></option>
+		    <option value = "brakes"> We will gladly take in your car!</option>
+            </select>
+
+          <label for="date">When can you bring your car in? (Please make it within a week):</label>
+          <input type="date" id="date" name="date">
+          <input type="submit">
+
+
+            <p>Anything else would you like to say?</p>
+	    <textarea name = "desc" rows="10" cols="30">
+            </textarea>
+            <p>Thanks, NCHSAutoshop</p>
+        </fieldset>
+</form>
+<form action= "/app.py" method="post">
+    <fieldset>  <!-- When it is waiting to be accepted, he can accept or deny it-->
+                <legend>Rejected Email template</legend>
+                <select name  ="CCR"> <!-- Cookie cutter responses -->
+                <option value = "Sorry">Sorry, we are busy</option>
+                <option value = "Sorry">Sorry, we don't service those types of repairs</option>
+                <option value = "brakes"> We will gladly take in your car!</option>
+                <option value = "other"> Other</option>
+                </select>
+
+              <label for="date">When can you bring your car in? (Please make it within a week):</label>
+              <input type="date" id="date" name="date">
+              <input type="submit">
+
+
+                <p>Anything else would you like to say?</p>
+            <textarea name = "repairDescription" rows="10" cols="30">
+                </textarea>
+                <p>Thanks,
+                    NCHSAutoshop</p>
+            </fieldset>
+    </form>
+<form action= "/app.py" method="post">
+<fieldset>  <!-- When it is finished, he confirms that it is finished and it prompts him to this.-->
+            <legend>Finished Email Template</legend>
+            <select name  ="CCR"> <!-- Cookie cutter responses -->
+		    <option value = "Location">I have your keys and Your car will be parked in the autoshop</option>
+		    <option value = "keys"> m</option>
+		    <option value = "other"> Other</option>
+            </select>
+
+          <label for="date">Pick it up preferrably by :</label>
+          <input type="date" id="date" name="date">
+          <input type="submit">
+
+
+            <p>Anything else would you like to say?</p>
+	    <textarea name = "repairDescription" rows="10" cols="30">
+            </textarea>
+            <p>Thanks, NCHSAutoshop</p>
+        </fieldset>
+</form>
+</body>
+</html>
