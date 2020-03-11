@@ -132,12 +132,34 @@ def test_sendEmail():
 def adminConsole():
     return(render_template("console.html", compliedData=toolkit.compileRequestData()))
 
+
 @bp.route("/admin", methods=['POST'])
 def processAdminRequest():
-    if request.form['side'] == 'L':
+    bt = request.form('buttontype')
+    if (bt == 'accept'):
+        # set repair accepted
+        # email
         pass
-    if request.form['side'] == 'R':
+    elif (bt == 'reject'):
+        # set repair rejected
+        # email
         pass
+    elif (bt == 'complete'):
+        # set repair complete
+        # email
+        pass
+    elif (bt == 'archive'):
+        # set repair archived?
+        pass
+    elif (bt == 'restore'):
+        # set repair pending
+        pass
+    elif (bt == 're-open'):  # might not be necessary
+        # set repair pending
+        pass
+    # here just add correct routes + call correct functions from toolkit to react correctly to different buttons
+    return (render_template("console.html", compliedData=toolkit.compileRequestData()))
+
 
 @bp.route("/admin/L/<repairID>", methods=['POST'])
 def sinistra(repairID):

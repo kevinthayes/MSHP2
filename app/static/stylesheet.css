@@ -122,9 +122,9 @@ form {
   height: 70px;
   width: 200px;
   font-size: 30px;
-  color: grey; /* ugly purple */
+  color: grey;
   margin: 0;
-  border-color: grey; /* ugly purple */
+  border-color: grey;
   border-width: 5px;
   border-style: solid;
   background: transparent;
@@ -140,25 +140,31 @@ form {
 .accept, .accept:after {
   content: "ACCEPT";
   color: #7CA982; /* mint */
-  border-color: #7CA982; /* mint */
+  border-color: #7CA982;
 }
 
 .deny, .deny:after {
   content: "DENY";
-  color: #FF6542;
+  color: #FF6542; /* red */
   border-color: #FF6542;
 }
 
 .print, .print:after {
   content: "PRINT";
-  color: #FCBA04; /* earwax - not really sure when this is used */
-  border-color: #FCBA04; /* earwax - not really sure when this is used */
+  color: #ED6911; /* orange-red */
+  border-color: #ED6911
 }
 
 .complete, .complete:after {
   content: "COMPLETE";
-  color: #FCBA04; /* earwax - not really sure when this is used */
-  border-color: #FCBA04;
+  color: #8936B3; /* purple */
+  border-color: #8936B3;
+}
+
+.restore, .restore:after {
+    content: "RESTORE";
+    color: #2D40BA /* blue */
+    border-color: #2D40BA
 }
 
 .space {
