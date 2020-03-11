@@ -7,9 +7,11 @@ from app import toolkit
 from flask import request
 from flask import flash
 from app.toolkit import setRepairCompleted
+from app.toolkit import getRepairCompleted
 from app.toolkit import setRepairAccepted
 from app.toolkit import getRepairAccepted
-
+#from app.toolkit import setRepairState
+#from app.toolkit import getRepairState
 bp = Blueprint("index", __name__)
 
 # PATHS ------------------------------------------------------------------------------------------------------
@@ -141,20 +143,20 @@ def processAdminRequest():
 
 @bp.route("/admin/L/<repairID>", methods=['POST'])
 def sinistra(repairID):
-    if getRepairAccepted(repairID) == True:
+    if getRepairState(repairID) == "in_Progress":
         pass
         #printForm(repairID)
     else:
-        setRepairAccepted(repairID, True)
+        setRepairState(repairID, "in_Progress")
         #sendAcceptEmail()
     return(render_template("console.html", compliedData=toolkit.compileRequestData()))
 
 @bp.route("/admin/R/<repairID>", methods=['POST'])
 def destra(repairID):
-    if getRepairAccepted(repairID) == True:
-        setRepairCompleted(repairID, True)
+    if getRepairState(repairID) == "in_Progress":
+        setRepairCompleted(repairID, "completed")
     else:
-        setRepairCompleted(repairID, True)
+        setRepairState(repairID, "completed")
         #sendRejectEmail()
     return(render_template("console.html", compliedData=toolkit.compileRequestData()))
 

@@ -36,8 +36,10 @@ CREATE TABLE repairs(
     repairType TEXT NOT NULL,
     repairDescription TEXT,
     accepted BOOLEAN,
-    completed BOOLEAN NOT NULL,
+    rejected BOOLEAN,
+    completed BOOLEAN,
     vehicleId INT NOT NULL,
     FOREIGN KEY(vehicleId) REFERENCES vehicles(vehicleId)
     );
+
 
