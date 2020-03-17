@@ -20,10 +20,11 @@
 		</div>
 		<header>
 		</header>
-
+		<!-- ik this probably isn't the most efficient method of sorting the tasks by state but it works so -->
 		<section>
 			{% for requestData in compliedData %}
-			{% if requestData['utilityDerivedDisplayState'] == True %}
+			<h1>PENDING</h1>
+			{% if (requestData[U_DLS] == "accept") %}
 			<div class="request">
 				<div class="generics-wrapper">
 					<div class="vehicle">{{requestData['year']}} {{requestData['make']}} {{requestData['model']}} </div>
@@ -31,13 +32,70 @@
 					<div class="customer">{{requestData['name']}}</div>
 					<div class="information">{{requestData['type']}} : {{requestData['description']}}</div>
 				</div>
-				
+
 				<div class="button-wrapper">
 					<form action="/admin/L/{{requestData['utilityIdentifier']}}" method="POST">
-						<button class="multi-button {{requestData['utilityDerivedLeftState']}}" type="submit"></button>
+						<button class="multi-button {{requestData['utilityDerivedLeftState']}}" name="buttontype" value="accept" type="submit"></button> <!-- accept -->
 					</form>
 					<form action="/admin/R/{{requestData['utilityIdentifier']}}" method="POST">
-						<button class="multi-button {{requestData['utilityDerivedRightState']}}" type="submit"></button>
+						<button class="multi-button {{requestData['utilityDerivedRightState']}}" name="buttontype" value="reject" type="submit"></button> <!-- reject -->
+					</form>
+				</div>
+			</div>
+			<h1>IN PROGRESS</h1>
+			{% elif (requestData[U_DLS] == "complete") %}
+			<div class="request">
+				<div class="generics-wrapper">
+					<div class="vehicle">{{requestData['year']}} {{requestData['make']}} {{requestData['model']}} </div>
+					<div class="vin">{{requestData['VIN']}} {{'No VIN Provided' if requestData['VIN'] == ''}}</div>
+					<div class="customer">{{requestData['name']}}</div>
+					<div class="information">{{requestData['type']}} : {{requestData['description']}}</div>
+				</div>
+
+				<div class="button-wrapper">
+					<form action="/admin/L/{{requestData['utilityIdentifier']}}" method="POST">
+						<button class="multi-button {{requestData['utilityDerivedLeftState']}}" name="buttontype" value="complete" type="submit"></button> <!-- mark as complete -->
+					</form>
+					<form action="/admin/R/{{requestData['utilityIdentifier']}}" method="POST">
+						<button class="multi-button {{requestData['utilityDerivedRightState']}}" name="buttontype" value="reject" type="submit"></button> <!-- reject -->
+					</form>
+				</div>
+			</div>
+			<h1>COMPLETED</h1>
+			{% elif (requestData[U_DLS] == "excluded") %}
+			<div class="request">
+				<div class="generics-wrapper">
+					<div class="vehicle">{{requestData['year']}} {{requestData['make']}} {{requestData['model']}} </div>
+					<div class="vin">{{requestData['VIN']}} {{'No VIN Provided' if requestData['VIN'] == ''}}</div>
+					<div class="customer">{{requestData['name']}}</div>
+					<div class="information">{{requestData['type']}} : {{requestData['description']}}</div>
+				</div>
+
+				<div class="button-wrapper">
+					<form action="/admin/L/{{requestData['utilityIdentifier']}}" method="POST">
+						<button class="multi-button {{requestData['utilityDerivedLeftState']}}" name="buttontype" value="archive" type="submit"></button> <!-- archive? -->
+					</form>
+					<form action="/admin/R/{{requestData['utilityIdentifier']}}" method="POST">
+						<button class="multi-button {{requestData['utilityDerivedRightState']}}" name="buttontype" value="re-open" type="submit"></button> <!-- re-open -->
+					</form>
+				</div>
+			</div>
+			<h1>REJECTED</h1>
+			{% elif (requestData[U_DLS] == "restore") %}
+			<div class="request">
+				<div class="generics-wrapper">
+					<div class="vehicle">{{requestData['year']}} {{requestData['make']}} {{requestData['model']}} </div>
+					<div class="vin">{{requestData['VIN']}} {{'No VIN Provided' if requestData['VIN'] == ''}}</div>
+					<div class="customer">{{requestData['name']}}</div>
+					<div class="information">{{requestData['type']}} : {{requestData['description']}}</div>
+				</div>
+
+				<div class="button-wrapper">
+					<form action="/admin/L/{{requestData['utilityIdentifier']}}" method="POST">
+						<button class="multi-button {{requestData['utilityDerivedLeftState']}}" name="buttontype" value="restore" type="submit"></button> <!-- restore -->
+					</form>
+					<form action="/admin/R/{{requestData['utilityIdentifier']}}" method="POST">
+						<button class="multi-button {{requestData['utilityDerivedRightState']}}" name="buttontype" value="archive" type="submit"></button> <!-- archive -->
 					</form>
 				</div>
 			</div>

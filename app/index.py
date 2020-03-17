@@ -13,6 +13,7 @@ from app.toolkit import getRepairAccepted
 #from app.toolkit import setRepairState
 #from app.toolkit import getRepairState
 bp = Blueprint("index", __name__)
+from app.toolkit import *
 
 # PATHS ------------------------------------------------------------------------------------------------------
 
@@ -60,6 +61,7 @@ def index():
 
 @bp.route('/login.html')
 def login():
+    toolkit.test()
     return render_template('login.html')
 
 
@@ -132,6 +134,7 @@ def test_sendEmail():
 # admin console routes
 @bp.route("/admin")
 def adminConsole():
+    print(toolkit.compileRequestData())
     return(render_template("console.html", compliedData=toolkit.compileRequestData()))
 
 @bp.route("/admin", methods=['POST'])
@@ -165,6 +168,7 @@ def destra(repairID):
 #Route to purge the database... smart idea
 @bp.route("/purge/database/<secretKey>")
 def seanThinksThisIsInsaneAndHeIsCorrect(secretKey):
+    print(app.config['SECRET_KEY'])
     if secretKey == app.config['SECRET_KEY']:
         toolkit.BIG_RED_BUTTON()
         return("bye bye...")

@@ -256,14 +256,17 @@ def createRepair(repairType,
 #Wipe Everything and Clear Database
 #Helpful for troubleshooting
 def BIG_RED_BUTTON():
+    query_db("DELETE FROM customers;")
+    query_db("DELETE FROM vehicles;")
+    query_db("DELETE FROM repairs;")
     myIds = getRepairIds();
-    for repId in myIds:
-        vehId = getAssociatedVehicle(repId)
-        cusId = getAssociatedCustomer(vehId)
-        RemoveCustomer(cusId)
-        PurgeRejected()
-
-    return ("Data whipe completed") #Sean is great at spelling.
+    # for repId in myIds:
+    #     vehId = getAssociatedVehicle(repId)
+    #     cusId = getAssociatedCustomer(vehId)
+    #     RemoveCustomer(cusId)
+    #     PurgeRejected()
+    #
+    # return ("Data whipe completed") #Sean is great at spelling.
 
 
 
@@ -355,23 +358,41 @@ def compileRequestData():
         U_DRS = "excluded"
         U_DDS = True
         if getRepairAccepted(repairID) == "True":
-            if getRepairCompleted(repairID) == "True":
+            if getRepairCompleted(repairID) == "True": # completed
                 U_DLS = "excluded"
                 U_DRS = "excluded"
                 U_DDS = False
-            if getRepairCompleted(repairID) != "True":
-                U_DLS = "print"
-                U_DRS = "complete"
+            else: # in progress
+                U_DLS = "complete"
+                U_DRS = "reject"
                 U_DDS = True
-        if getRepairAccepted(repairID) != "True":
-            if getRepairCompleted(repairID) == "True":
-                U_DLS = "excluded"
-                U_DRS = "excluded"
-                U_DDS = False
-            if getRepairCompleted(repairID) != "True":
-                U_DLS = "accept"
-                U_DRS = "deny"
-                U_DDS = True
+        elif getRepairRejected(repairID) == "True": # rejected
+            U_DLS = "restore"
+            U_DRS = "purge"
+            U_DDS = False
+        elif getRepairAccepted(repairID) == "False": # pending
+            U_DLS = "accept"
+            U_DRS = "reject"
+            U_DDS = True
+
+        # if getRepairAccepted(repairID) == "True":
+        #     if getRepairCompleted(repairID) == "True":
+        #         U_DLS = "excluded"
+        #         U_DRS = "excluded"
+        #         U_DDS = False
+        #     if getRepairCompleted(repairID) != "True":
+        #         U_DLS = "print"
+        #         U_DRS = "complete"
+        #         U_DDS = True
+        # if getRepairAccepted(repairID) != "True":
+        #     if getRepairCompleted(repairID) == "True":
+        #         U_DLS = "excluded"
+        #         U_DRS = "excluded"
+        #         U_DDS = False
+        #     if getRepairCompleted(repairID) != "True":
+        #         U_DLS = "accept"
+        #         U_DRS = "deny"
+        #         U_DDS = True
         #Package request data and derived utility states into a dictionary.
         requestData = {
             "year" : getVehicleYear(getAssociatedVehicle(repairID)),
