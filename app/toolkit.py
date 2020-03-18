@@ -357,42 +357,41 @@ def compileRequestData():
         U_DLS = "excluded"
         U_DRS = "excluded"
         U_DDS = True
+        location = 1;
+        # location: what state the repair is in
+        # 1: pending
+        # 2: in progress
+        # 3: rejected
+        # 4: complete
+
         if getRepairAccepted(repairID) == "True":
-            if getRepairCompleted(repairID) == "True": # completed
-                U_DLS = "excluded"
-                U_DRS = "excluded"
-                U_DDS = False
-            else: # in progress
-                U_DLS = "complete"
-                U_DRS = "reject"
-                U_DDS = True
-        elif getRepairRejected(repairID) == "True": # rejected
+             if getRepairCompleted(repairID) == "True": # complete
+                 U_DLS = "excluded"
+                 U_DRS = "excluded"
+                 U_DDS = False
+                 location = 4
+             if getRepairCompleted(repairID) != "True": # in progress
+                 U_DLS = "print"
+                 U_DRS = "complete"
+                 U_DDS = True
+                 location = 2
+        if getRepairAccepted(repairID) != "True":
+             if getRepairCompleted(repairID) == "True": # why is this here
+                 U_DLS = "excluded"
+                 U_DRS = "excluded"
+                 U_DDS = False
+                 location = 4
+             if getRepairCompleted(repairID) != "True": # pending
+                 U_DLS = "accept"
+                 U_DRS = "deny"
+                 U_DDS = True
+                 location = 1
+        if getRepairRejected(repairID) == "True": # rejected
             U_DLS = "restore"
             U_DRS = "purge"
-            U_DDS = False
-        elif getRepairAccepted(repairID) == "False": # pending
-            U_DLS = "accept"
-            U_DRS = "reject"
             U_DDS = True
+            location = 3
 
-        # if getRepairAccepted(repairID) == "True":
-        #     if getRepairCompleted(repairID) == "True":
-        #         U_DLS = "excluded"
-        #         U_DRS = "excluded"
-        #         U_DDS = False
-        #     if getRepairCompleted(repairID) != "True":
-        #         U_DLS = "print"
-        #         U_DRS = "complete"
-        #         U_DDS = True
-        # if getRepairAccepted(repairID) != "True":
-        #     if getRepairCompleted(repairID) == "True":
-        #         U_DLS = "excluded"
-        #         U_DRS = "excluded"
-        #         U_DDS = False
-        #     if getRepairCompleted(repairID) != "True":
-        #         U_DLS = "accept"
-        #         U_DRS = "deny"
-        #         U_DDS = True
         #Package request data and derived utility states into a dictionary.
         requestData = {
             "year" : getVehicleYear(getAssociatedVehicle(repairID)),
@@ -405,9 +404,9 @@ def compileRequestData():
             "utilityDerivedLeftState" : U_DLS,
             "utilityDerivedRightState" : U_DRS,
             "utilityDerivedDisplayState" : U_DDS,
-            "utilityIdentifier" : repairID
+            "utilityIdentifier" : repairID,
+            "location" : location
         }
         #Push dictionary to list of dictionaries.
         compiledData.append(requestData)
-    return compiledData
-
+        return compiledData

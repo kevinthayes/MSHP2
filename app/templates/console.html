@@ -22,9 +22,10 @@
 		</header>
 		<!-- ik this probably isn't the most efficient method of sorting the tasks by state but it works so -->
 		<section>
-			{% for requestData in compliedData %}
 			<h1>PENDING</h1>
-			{% if (requestData[U_DLS] == "accept") %}
+			{% for requestData in compliedData %}
+			<h1> {{ requestData[location] }}</h1>
+			{% if (requestData[location] == 1) %}
 			<div class="request">
 				<div class="generics-wrapper">
 					<div class="vehicle">{{requestData['year']}} {{requestData['make']}} {{requestData['model']}} </div>
@@ -42,8 +43,12 @@
 					</form>
 				</div>
 			</div>
+			{% endif %}
+			{% endfor %}
+
 			<h1>IN PROGRESS</h1>
-			{% elif (requestData[U_DLS] == "complete") %}
+			{% for requestData in compliedData %}
+			{% if (requestData[location] == 2) %}
 			<div class="request">
 				<div class="generics-wrapper">
 					<div class="vehicle">{{requestData['year']}} {{requestData['make']}} {{requestData['model']}} </div>
@@ -61,8 +66,12 @@
 					</form>
 				</div>
 			</div>
+			{% endif %}
+			{% endfor %}
+
 			<h1>COMPLETED</h1>
-			{% elif (requestData[U_DLS] == "excluded") %}
+			{% for requestData in compliedData %}
+			{% if (requestData[location] == 3) %}
 			<div class="request">
 				<div class="generics-wrapper">
 					<div class="vehicle">{{requestData['year']}} {{requestData['make']}} {{requestData['model']}} </div>
@@ -80,8 +89,12 @@
 					</form>
 				</div>
 			</div>
+			{% endif %}
+			{% endfor %}
+
 			<h1>REJECTED</h1>
-			{% elif (requestData[U_DLS] == "restore") %}
+			{% for requestData in compliedData %}
+			{% if (requestData[location] == 4) %}
 			<div class="request">
 				<div class="generics-wrapper">
 					<div class="vehicle">{{requestData['year']}} {{requestData['make']}} {{requestData['model']}} </div>
