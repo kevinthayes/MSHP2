@@ -1,14 +1,15 @@
 PROJECT OVERVIEW:
-The purpose of this project is to create a functional autoshop website through which potential customers can insert their information and requested repairs, and through which the website administrator can accept and reject these repairs, mark these repairs completed or incomplete, send emails informing customers of the state of their repair requests, and print the necessary forms surrounding the repairs.
+The purpose of this project is to create a functional autoshop website through which potential customers can insert their information and requested repairs, and through which the website administrator can accept and reject these repairs, mark them finished, (and or recover the repairs if they're rejected) send emails informing customers of the state of their repair requests, and print the necessary forms surrounding the repairs.
 
 IMPORTS: BareNecessities and Mail
 
 FILES AND THEIR PURPOSE:
 app.py
 	Mailing
-		Establishes connection with google's mailing server to allow for automated emailing from the website to customers about requests.
+		Establishes connection with google's mailing server to allow for automated emailing from the website to customers about requests. 
 	Forms
 		Using functions in validation.py, validate information given by the user by the rendered html form login.html
+		It should be able to save the data passed to accepted/rejected/finished.html and send it in an email.
 	Admin Console
 		Where the administrator is going to be able to view the data.
 
@@ -47,6 +48,13 @@ templates (folder)
 		the html form where user will enter in information, rendered in app.py
 	testEmail.html
 		Test email to demonstrate the functionality of the emailing functions.
+	accepted.html
+		Email template that the administrator fills out for when the job is accepted
+	rejected.html
+		email template that the administrator fills out for when the job is rejected
+	finished.html
+		email template that the administrator fills out for when the job is finished
+		
 
 
 
@@ -80,9 +88,9 @@ USING PROJECT:
 		
 CHANGES FOR THE FUTURE:
 - Button functionality (there is some backend for these things):
-	- Pressing Deny/Accept should prompt Mr. Feid to send an email (which he should be allowed to send as default or modify)
-	- Pressing Deny/Accept should update the deny/accept boolean in the database.
-	- Pressing Deny and sending the email should remove the particular request from the admin console
+	- Pressing Accept/Reject should prompt Mr. Feid to send an email (which he should be allowed to send as default or modify)
+	- Pressing Accept/Reject should update the Accept/Reject boolean in the database.
+	- Pressing Reject and sending the email should remove the particular request from the admin console and move it to the archive
 	- Pressing Accept and sending the email should switch the button to completed and offer Mr. Feid a way to print the manual form he needs to print.
 - PDF Form Functionality (theere is some backend for these things.)
 	- Mr. Feid should be able to print the form (that one he needs in triplicate) or download the form.
