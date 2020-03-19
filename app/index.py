@@ -61,7 +61,6 @@ def index():
 
 @bp.route('/login.html')
 def login():
-    toolkit.test()
     return render_template('login.html')
 
 
@@ -134,15 +133,16 @@ def test_sendEmail():
 # admin console routes
 @bp.route("/admin")
 def adminConsole():
-    print(toolkit.compileRequestData())
-    return(render_template("console.html", compliedData=toolkit.compileRequestData()))
+    for data in toolkit.compileRequestData():
+        print(data['year'])
+    return(render_template("console.html", compiledData=toolkit.compileRequestData()))
 
-@bp.route("/admin", methods=['POST'])
-def processAdminRequest():
-    if request.form['side'] == 'L':
-        pass
-    if request.form['side'] == 'R':
-        pass
+# @bp.route("/admin", methods=['POST'])
+# def processAdminRequest():
+#     if request.form['side'] == 'L':
+#         pass
+#     if request.form['side'] == 'R':
+#         pass
 
 @bp.route("/admin/L/<repairID>", methods=['POST'])
 def sinistra(repairID):
@@ -168,7 +168,6 @@ def destra(repairID):
 #Route to purge the database... smart idea
 @bp.route("/purge/database/<secretKey>")
 def seanThinksThisIsInsaneAndHeIsCorrect(secretKey):
-    print(app.config['SECRET_KEY'])
     if secretKey == app.config['SECRET_KEY']:
         toolkit.BIG_RED_BUTTON()
         return("bye bye...")

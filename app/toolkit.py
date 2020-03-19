@@ -246,7 +246,7 @@ def createRepair(repairType,
     #If vehicleId isn't specified, gets the most recent one
     if (vehicleId == 'default'):
         getId = query_db("SELECT vehicleId FROM vehicles ORDER BY vehicleId DESC", one = True)
-    query_db("INSERT INTO repairs (repairType, repairDescription, accepted, completed, vehicleId) VALUES(?,?,?,?,?)", (repairType, repairDescription, status, getId['vehicleId']))
+    query_db("INSERT INTO repairs (repairType, repairDescription, accepted, completed, rejected, vehicleId) VALUES(?,?,?,?,?,?)", (repairType, repairDescription, accepted, completed, rejected, getId['vehicleId']))
     return "Repair has been created."
 
 #BIG RED BUTTON FUNCTIONS
@@ -322,9 +322,8 @@ def publish(formInfo):
 
    #Creates repair from validated form info
    createRepair(formInfo['repairType'],
-                formInfo['repairDescription'],
-                accepted = False,
-                completed = False)
+                formInfo['repairDescription'])
+   print("spic")
 
 #TESTER FUNCTIONS
 #For testing purposes only:
@@ -353,6 +352,7 @@ def compileRequestData():
     #Create list to be filled with dictionaries.
     compiledData = []
     #Derive utility states for left multi-button, right multi-button, and overall display state.
+    print(getRepairIds())
     for repairID in getRepairIds():
         U_DLS = "excluded"
         U_DRS = "excluded"
@@ -409,4 +409,4 @@ def compileRequestData():
         }
         #Push dictionary to list of dictionaries.
         compiledData.append(requestData)
-        return compiledData
+    return compiledData

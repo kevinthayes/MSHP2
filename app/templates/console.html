@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -20,12 +20,12 @@
 		</div>
 		<header>
 		</header>
+
 		<!-- ik this probably isn't the most efficient method of sorting the tasks by state but it works so -->
 		<section>
 			<h1>PENDING</h1>
-			{% for requestData in compliedData %}
-			<h1> {{ requestData[location] }}</h1>
-			{% if (requestData[location] == 1) %}
+			{% for requestData in compiledData %}
+			{% if (requestData['location'] == 1) %}
 			<div class="request">
 				<div class="generics-wrapper">
 					<div class="vehicle">{{requestData['year']}} {{requestData['make']}} {{requestData['model']}} </div>
@@ -48,7 +48,7 @@
 
 			<h1>IN PROGRESS</h1>
 			{% for requestData in compliedData %}
-			{% if (requestData[location] == 2) %}
+			{% if (requestData['location'] == 2) %}
 			<div class="request">
 				<div class="generics-wrapper">
 					<div class="vehicle">{{requestData['year']}} {{requestData['make']}} {{requestData['model']}} </div>
@@ -71,7 +71,7 @@
 
 			<h1>COMPLETED</h1>
 			{% for requestData in compliedData %}
-			{% if (requestData[location] == 3) %}
+			{% if (requestData['location'] == 3) %}
 			<div class="request">
 				<div class="generics-wrapper">
 					<div class="vehicle">{{requestData['year']}} {{requestData['make']}} {{requestData['model']}} </div>
@@ -94,7 +94,7 @@
 
 			<h1>REJECTED</h1>
 			{% for requestData in compliedData %}
-			{% if (requestData[location] == 4) %}
+			{% if (requestData['location'] == 4) %}
 			<div class="request">
 				<div class="generics-wrapper">
 					<div class="vehicle">{{requestData['year']}} {{requestData['make']}} {{requestData['model']}} </div>
