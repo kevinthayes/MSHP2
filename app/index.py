@@ -133,12 +133,11 @@ def test_sendEmail():
 # admin console routes
 @bp.route("/admin")
 def adminConsole():
-    for data in toolkit.compileRequestData():
-        print(data['year'])
     return(render_template("console.html", compiledData=toolkit.compileRequestData()))
 
-# @bp.route("/admin", methods=['POST'])
+# @bp.route("/admin", methods=['POST']) # if i wrote this, maybe delete
 # def processAdminRequest():
+#     print(request.form)
 #     if request.form['side'] == 'L':
 #         pass
 #     if request.form['side'] == 'R':
@@ -146,22 +145,32 @@ def adminConsole():
 
 @bp.route("/admin/L/<repairID>", methods=['POST'])
 def sinistra(repairID):
-    if getRepairState(repairID) == "in_Progress":
-        pass
-        #printForm(repairID)
-    else:
-        setRepairState(repairID, "in_Progress")
-        #sendAcceptEmail()
+    if (getRepairAccepted(repairID) == "False" and getRepairRejected(repairID) == "False" and getRepairCompleted(repairID) == "False"): # pending
+        setRepairAccepted(repairID, "False")
+        setRepairCompleted(repairID, "True")
+        setRepairRejected(repairID, "False")
+    elif (getRepairAccepted(repairID) == "True" and getRepairRejected(repairID) == "False" and getRepairCompleted(repairID) == "False"): # in progress
+        setRepairAccepted(repairID, "False")
+        setRepairCompleted(repairID, "True")
+        setRepairRejected(repairID, "False")
+    elif (getRepairAccepted(repairID) == "False" and getRepairRejected(repairID) == "False" and getRepairCompleted(repairID) == "True"):  # completed
+        setRepairAccepted(repairID, "False")
+        setRepairCompleted(repairID, "False")
+        setRepairRejected(repairID, "False")
+    elif (getRepairAccepted(repairID) == "False" and getRepairRejected(repairID) == "True" and getRepairCompleted(repairID) == "False"): # rejected
+        setRepairAccepted(repairID, "False")
+        setRepairCompleted(repairID, "False")
+        setRepairRejected(repairID, "False")
     return(render_template("console.html", compliedData=toolkit.compileRequestData()))
 
-@bp.route("/admin/R/<repairID>", methods=['POST'])
-def destra(repairID):
-    if getRepairState(repairID) == "in_Progress":
-        setRepairCompleted(repairID, "completed")
-    else:
-        setRepairState(repairID, "completed")
-        #sendRejectEmail()
-    return(render_template("console.html", compliedData=toolkit.compileRequestData()))
+# @bp.route("/admin/R/<repairID>", methods=['POST'])
+# def destra(repairID):
+#     if getRepairState(repairID) == "in_Progress":
+#         setRepairCompleted(repairID, "completed")
+#     else:
+#         setRepairState(repairID, "completed")
+#         #sendRejectEmail()
+#     return(render_template("console.html", compliedData=toolkit.compileRequestData()))
 
 # end admin paths
 

@@ -196,15 +196,16 @@ def setRepairCompleted(repID, completed):
     query_db(mySQL, (int(repID),))
     return("status has been updated to " + str(completed))
 
-def setRepairCompleted(repID, completed):
-    mySQL = concantenate("repair", "completed", str(completed))
+def setRepairRejected(repID, rejected):
+    mySQL = concantenate("repair", "completed", str(rejected))
     query_db(mySQL, (int(repID),))
-    return("status has been updated to " + str(completed))
+    return("status has been updated to " + str(rejected))
 
-def setRepairCompleted(repID, completed):
-    mySQL = concantenate("repair", "completed", str(completed))
-    query_db(mySQL, (int(repID),))
-    return("status has been updated to " + str(completed))
+# idk why there are three setrepaircompleted methods that are exactly the same
+# def setRepairCompleted(repID, completed):
+#     mySQL = concantenate("repair", "completed", str(completed))
+#     query_db(mySQL, (int(repID),))
+#     return("status has been updated to " + str(completed))
 
 #def setRepairState(repID, status):
 #    mySQL = concantenate("repair","status",status)
