@@ -194,6 +194,7 @@ def setRepairAccepted(repID, accepted):
 def setRepairCompleted(repID, completed):
     mySQL = concantenate("repair", "completed", str(completed))
     query_db(mySQL, (int(repID),))
+    print(str(completed))
     return("status has been updated to " + str(completed))
 
 def setRepairRejected(repID, rejected):
@@ -364,30 +365,29 @@ def compileRequestData():
         # 2: in progress
         # 3: rejected
         # 4: complete
-
-        if getRepairAccepted(repairID) == "True":
-             if getRepairCompleted(repairID) == "True": # complete
+        if getRepairAccepted(repairID) == 1:
+             if getRepairCompleted(repairID) == 1: # complete
                  U_DLS = "excluded"
                  U_DRS = "excluded"
                  U_DDS = False
                  location = 4
-             if getRepairCompleted(repairID) != "True": # in progress
+             if getRepairCompleted(repairID) == 0: # in progress
                  U_DLS = "print"
                  U_DRS = "complete"
                  U_DDS = True
                  location = 2
-        if getRepairAccepted(repairID) != "True":
-             if getRepairCompleted(repairID) == "True": # why is this here
+        if getRepairAccepted(repairID) == 0:
+             if getRepairCompleted(repairID) == 1: # why is this here
                  U_DLS = "excluded"
                  U_DRS = "excluded"
                  U_DDS = False
                  location = 4
-             if getRepairCompleted(repairID) != "True": # pending
+             if getRepairCompleted(repairID) == 0: # pending
                  U_DLS = "accept"
                  U_DRS = "deny"
                  U_DDS = True
                  location = 1
-        if getRepairRejected(repairID) == "True": # rejected
+        if getRepairRejected(repairID) == 1: # rejected
             U_DLS = "restore"
             U_DRS = "purge"
             U_DDS = True

@@ -20,7 +20,8 @@ from app.toolkit import *
 #Way to fake-instantiate the database
 @bp.route("/functionTest", methods=["GET"])
 def functiontest():
-    # Something in order troubleshoot: literally calling just about everything in the file. (May have to re-instantiate the database from dummyTester.py because no vin and things yet.
+    # Something in order troubleshoot: literally calling just about everything in the file. (May have to re-instantiate the database
+    # from dummyTester.py because no vin and things yet.
     entries = query_db("""
         SELECT customers.customerName, customers.customerEmail, vehicles.make, vehicles.model, repairs.repairType, repairs.repairId
         FROM ((vehicles INNER JOIN customers ON vehicles.customerID = customers.customerID)
@@ -123,16 +124,24 @@ def result():
 
     return render_template("login.html")
 
-# test email
-@bp.route("/test_sendEmail")
-def test_sendEmail():
-    #email template can be found at app/templates/testEmail.html
-    sendEmail("This is a test email!", render_template("testEmail.html"), "spkudrna@gmail.com")
-    return("email test succefully fired, check target inbox.")
+# # test email
+# @bp.route("/test_sendEmail")
+# def test_sendEmail():
+#     #email template can be found at app/templates/testEmail.html
+#     sendEmail("This is a test email!", render_template("testEmail.html"), "spkudrna@gmail.com")
+#     return("email test succefully fired, check target inbox.")
 
 # admin console routes
 @bp.route("/admin")
 def adminConsole():
+    # worms = toolkit.getRepairIds()
+    # for x in worms:
+    #     print(getRepairRejected(x))
+    #     print(getRepairRejected(x))
+    #     print(getRepairAccepted(x))
+    #     if (getRepairAccepted(x) == "False"):
+    #         print("GOTCHA")
+    #         setRepairAccepted(x, 0)
     return(render_template("console.html", compiledData=toolkit.compileRequestData()))
 
 # @bp.route("/admin", methods=['POST']) # if i wrote this, maybe delete
@@ -143,34 +152,56 @@ def adminConsole():
 #     if request.form['side'] == 'R':
 #         pass
 
-@bp.route("/admin/L/<repairID>", methods=['POST'])
+@bp.route("/admin/L/<repairID>", methods=['GET','POST'])
 def sinistra(repairID):
-    if (getRepairAccepted(repairID) == "False" and getRepairRejected(repairID) == "False" and getRepairCompleted(repairID) == "False"): # pending
-        setRepairAccepted(repairID, "False")
-        setRepairCompleted(repairID, "True")
-        setRepairRejected(repairID, "False")
-    elif (getRepairAccepted(repairID) == "True" and getRepairRejected(repairID) == "False" and getRepairCompleted(repairID) == "False"): # in progress
-        setRepairAccepted(repairID, "False")
-        setRepairCompleted(repairID, "True")
-        setRepairRejected(repairID, "False")
-    elif (getRepairAccepted(repairID) == "False" and getRepairRejected(repairID) == "False" and getRepairCompleted(repairID) == "True"):  # completed
-        setRepairAccepted(repairID, "False")
-        setRepairCompleted(repairID, "False")
-        setRepairRejected(repairID, "False")
-    elif (getRepairAccepted(repairID) == "False" and getRepairRejected(repairID) == "True" and getRepairCompleted(repairID) == "False"): # rejected
-        setRepairAccepted(repairID, "False")
-        setRepairCompleted(repairID, "False")
-        setRepairRejected(repairID, "False")
+    print(getRepairCompleted(repairID))
+    print(getRepairRejected(repairID))
+    print(getRepairAccepted(repairID))
+    if (getRepairAccepted(repairID) == 0 and getRepairRejected(repairID) == 0 and getRepairCompleted(repairID) == 0): # pending
+        print('hewwo')
+        setRepairAccepted(repairID, 0)
+        setRepairCompleted(repairID, 1)
+        setRepairRejected(repairID, 0)
+    elif (getRepairAccepted(repairID) == 1 and getRepairRejected(repairID) == 0 and getRepairCompleted(repairID) == 0): # in progress
+        setRepairAccepted(repairID, 0)
+        setRepairCompleted(repairID, 1)
+        setRepairRejected(repairID, 0)
+    elif (getRepairAccepted(repairID) == 0 and getRepairRejected(repairID) == 0 and getRepairCompleted(repairID) == 1):  # completed
+        setRepairAccepted(repairID, 0)
+        setRepairCompleted(repairID, 0)
+        setRepairRejected(repairID, 0)
+    elif (getRepairAccepted(repairID) == 0 and getRepairRejected(repairID) == 1 and getRepairCompleted(repairID) == 0): # rejected
+        setRepairAccepted(repairID, 0)
+        setRepairCompleted(repairID, 0)
+        setRepairRejected(repairID, 0)
+    print(getRepairCompleted(repairID))
+    print(getRepairRejected(repairID))
+    print(getRepairAccepted(repairID))
     return(render_template("console.html", compliedData=toolkit.compileRequestData()))
 
-# @bp.route("/admin/R/<repairID>", methods=['POST'])
-# def destra(repairID):
-#     if getRepairState(repairID) == "in_Progress":
-#         setRepairCompleted(repairID, "completed")
-#     else:
-#         setRepairState(repairID, "completed")
-#         #sendRejectEmail()
-#     return(render_template("console.html", compliedData=toolkit.compileRequestData()))
+@bp.route("/admin/R/<repairID>", methods=['GET','POST'])
+def destra(repairID): # FIX!!!!!
+    if (getRepairAccepted(repairID) == "False" and getRepairRejected(repairID) == "False" and getRepairCompleted(
+            repairID) == "False"):  # pending
+        setRepairAccepted(repairID, "False")
+        setRepairCompleted(repairID, "True")
+        setRepairRejected(repairID, "False")
+    elif (getRepairAccepted(repairID) == "True" and getRepairRejected(repairID) == "False" and getRepairCompleted(
+            repairID) == "False"):  # in progress
+        setRepairAccepted(repairID, "False")
+        setRepairCompleted(repairID, "True")
+        setRepairRejected(repairID, "False")
+    elif (getRepairAccepted(repairID) == "False" and getRepairRejected(repairID) == "False" and getRepairCompleted(
+            repairID) == "True"):  # completed
+        setRepairAccepted(repairID, "False")
+        setRepairCompleted(repairID, "False")
+        setRepairRejected(repairID, "False")
+    elif (getRepairAccepted(repairID) == "False" and getRepairRejected(repairID) == "True" and getRepairCompleted(
+            repairID) == "False"):  # rejected
+        setRepairAccepted(repairID, "False")
+        setRepairCompleted(repairID, "False")
+        setRepairRejected(repairID, "False")
+    return (render_template("console.html", compliedData=toolkit.compileRequestData()))
 
 # end admin paths
 
