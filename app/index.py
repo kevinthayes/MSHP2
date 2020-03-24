@@ -134,33 +134,13 @@ def result():
 # admin console routes
 @bp.route("/admin")
 def adminConsole():
-    # worms = toolkit.getRepairIds()
-    # for x in worms:
-    #     print(getRepairRejected(x))
-    #     print(getRepairRejected(x))
-    #     print(getRepairAccepted(x))
-    #     if (getRepairAccepted(x) == "False"):
-    #         print("GOTCHA")
-    #         setRepairAccepted(x, 0)
     return(render_template("console.html", compiledData=toolkit.compileRequestData()))
-
-# @bp.route("/admin", methods=['POST']) # if i wrote this, maybe delete
-# def processAdminRequest():
-#     print(request.form)
-#     if request.form['side'] == 'L':
-#         pass
-#     if request.form['side'] == 'R':
-#         pass
 
 @bp.route("/admin/L/<repairID>", methods=['GET','POST'])
 def sinistra(repairID):
-    print(getRepairCompleted(repairID))
-    print(getRepairRejected(repairID))
-    print(getRepairAccepted(repairID))
     if (getRepairAccepted(repairID) == 0 and getRepairRejected(repairID) == 0 and getRepairCompleted(repairID) == 0): # pending
-        print('hewwo')
-        setRepairAccepted(repairID, 0)
-        setRepairCompleted(repairID, 1)
+        setRepairAccepted(repairID, 1)
+        setRepairCompleted(repairID, 0)
         setRepairRejected(repairID, 0)
     elif (getRepairAccepted(repairID) == 1 and getRepairRejected(repairID) == 0 and getRepairCompleted(repairID) == 0): # in progress
         setRepairAccepted(repairID, 0)
@@ -174,34 +154,28 @@ def sinistra(repairID):
         setRepairAccepted(repairID, 0)
         setRepairCompleted(repairID, 0)
         setRepairRejected(repairID, 0)
-    print(getRepairCompleted(repairID))
-    print(getRepairRejected(repairID))
-    print(getRepairAccepted(repairID))
-    return(render_template("console.html", compliedData=toolkit.compileRequestData()))
+    return adminConsole()
 
 @bp.route("/admin/R/<repairID>", methods=['GET','POST'])
-def destra(repairID): # FIX!!!!!
-    if (getRepairAccepted(repairID) == "False" and getRepairRejected(repairID) == "False" and getRepairCompleted(
-            repairID) == "False"):  # pending
-        setRepairAccepted(repairID, "False")
-        setRepairCompleted(repairID, "True")
-        setRepairRejected(repairID, "False")
-    elif (getRepairAccepted(repairID) == "True" and getRepairRejected(repairID) == "False" and getRepairCompleted(
-            repairID) == "False"):  # in progress
-        setRepairAccepted(repairID, "False")
-        setRepairCompleted(repairID, "True")
-        setRepairRejected(repairID, "False")
-    elif (getRepairAccepted(repairID) == "False" and getRepairRejected(repairID) == "False" and getRepairCompleted(
-            repairID) == "True"):  # completed
-        setRepairAccepted(repairID, "False")
-        setRepairCompleted(repairID, "False")
-        setRepairRejected(repairID, "False")
-    elif (getRepairAccepted(repairID) == "False" and getRepairRejected(repairID) == "True" and getRepairCompleted(
-            repairID) == "False"):  # rejected
-        setRepairAccepted(repairID, "False")
-        setRepairCompleted(repairID, "False")
-        setRepairRejected(repairID, "False")
-    return (render_template("console.html", compliedData=toolkit.compileRequestData()))
+def destra(repairID):
+    if (getRepairAccepted(repairID) == 0 and getRepairRejected(repairID) == 0 and getRepairCompleted(repairID) == 0): # pending
+        setRepairAccepted(repairID, 0)
+        setRepairCompleted(repairID, 0)
+        setRepairRejected(repairID, 1)
+    elif (getRepairAccepted(repairID) == 1 and getRepairRejected(repairID) == 0 and getRepairCompleted(repairID) == 0): # in progress
+        # print
+        print("print")
+    elif (getRepairAccepted(repairID) == 0 and getRepairRejected(repairID) == 0 and getRepairCompleted(repairID) == 1):  # completed
+        # purge
+        setRepairAccepted(repairID, 1)
+        setRepairCompleted(repairID, 1)
+        setRepairRejected(repairID, 1)
+    elif (getRepairAccepted(repairID) == 0 and getRepairRejected(repairID) == 1 and getRepairCompleted(repairID) == 0): # rejected
+        # purge
+        setRepairAccepted(repairID, 1)
+        setRepairCompleted(repairID, 1)
+        setRepairRejected(repairID, 1)
+    return adminConsole()
 
 # end admin paths
 

@@ -151,13 +151,31 @@ form {
 
 .print, .print:after {
   content: "PRINT";
-  color: #FCBA04; /* earwax - not really sure when this is used */
-  border-color: #FCBA04; /* earwax - not really sure when this is used */
+  color: #FCBA04; /* earwax */
+  border-color: #FCBA04; /* earwax */
 }
 
 .complete, .complete:after {
   content: "COMPLETE";
-  color: #FCBA04; /* earwax - not really sure when this is used */
+  color: #FCBA04; /* earwax */
+  border-color: #FCBA04;
+}
+
+.re-open, .re-open:after {
+  content: "RE-OPEN";
+  color: #FCBA04; /* earwax */
+  border-color: #FCBA04;
+}
+
+.purge, .purge:after {
+  content: "PURGE";
+  color: #FCBA04; /* earwax */
+  border-color: #FCBA04;
+}
+
+.restore, .restore:after {
+  content: "RESTORE";
+  color: #FCBA04; /* earwax */
   border-color: #FCBA04;
 }
 
