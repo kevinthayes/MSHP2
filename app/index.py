@@ -13,13 +13,15 @@ from app.toolkit import getRepairAccepted
 #from app.toolkit import setRepairState
 #from app.toolkit import getRepairState
 bp = Blueprint("index", __name__)
+from app.toolkit import *
 
 # PATHS ------------------------------------------------------------------------------------------------------
 
 #Way to fake-instantiate the database
 @bp.route("/functionTest", methods=["GET"])
 def functiontest():
-    # Something in order troubleshoot: literally calling just about everything in the file. (May have to re-instantiate the database from dummyTester.py because no vin and things yet.
+    # Something in order troubleshoot: literally calling just about everything in the file. (May have to re-instantiate the database
+    # from dummyTester.py because no vin and things yet.
     entries = query_db("""
         SELECT customers.customerName, customers.customerEmail, vehicles.make, vehicles.model, repairs.repairType, repairs.repairId
         FROM ((vehicles INNER JOIN customers ON vehicles.customerID = customers.customerID)
@@ -122,43 +124,58 @@ def result():
 
     return render_template("login.html")
 
-# test email
-@bp.route("/test_sendEmail")
-def test_sendEmail():
-    #email template can be found at app/templates/testEmail.html
-    sendEmail("This is a test email!", render_template("testEmail.html"), "spkudrna@gmail.com")
-    return("email test succefully fired, check target inbox.")
+# # test email
+# @bp.route("/test_sendEmail")
+# def test_sendEmail():
+#     #email template can be found at app/templates/testEmail.html
+#     sendEmail("This is a test email!", render_template("testEmail.html"), "spkudrna@gmail.com")
+#     return("email test succefully fired, check target inbox.")
 
 # admin console routes
 @bp.route("/admin")
 def adminConsole():
-    return(render_template("console.html", compliedData=toolkit.compileRequestData()))
+    return(render_template("console.html", compiledData=toolkit.compileRequestData()))
 
-@bp.route("/admin", methods=['POST'])
-def processAdminRequest():
-    if request.form['side'] == 'L':
-        pass
-    if request.form['side'] == 'R':
-        pass
-
-@bp.route("/admin/L/<repairID>", methods=['POST'])
+@bp.route("/admin/L/<repairID>", methods=['GET','POST'])
 def sinistra(repairID):
-    if getRepairState(repairID) == "in_Progress":
-        pass
-        #printForm(repairID)
-    else:
-        setRepairState(repairID, "in_Progress")
-        #sendAcceptEmail()
-    return(render_template("console.html", compliedData=toolkit.compileRequestData()))
+    if (getRepairAccepted(repairID) == 0 and getRepairRejected(repairID) == 0 and getRepairCompleted(repairID) == 0): # pending
+        setRepairAccepted(repairID, 1)
+        setRepairCompleted(repairID, 0)
+        setRepairRejected(repairID, 0)
+    elif (getRepairAccepted(repairID) == 1 and getRepairRejected(repairID) == 0 and getRepairCompleted(repairID) == 0): # in progress
+        setRepairAccepted(repairID, 0)
+        setRepairCompleted(repairID, 1)
+        setRepairRejected(repairID, 0)
+    elif (getRepairAccepted(repairID) == 0 and getRepairRejected(repairID) == 0 and getRepairCompleted(repairID) == 1):  # completed
+        setRepairAccepted(repairID, 0)
+        setRepairCompleted(repairID, 0)
+        setRepairRejected(repairID, 0)
+    elif (getRepairAccepted(repairID) == 0 and getRepairRejected(repairID) == 1 and getRepairCompleted(repairID) == 0): # rejected
+        setRepairAccepted(repairID, 0)
+        setRepairCompleted(repairID, 0)
+        setRepairRejected(repairID, 0)
+    return adminConsole()
 
-@bp.route("/admin/R/<repairID>", methods=['POST'])
+@bp.route("/admin/R/<repairID>", methods=['GET','POST'])
 def destra(repairID):
-    if getRepairState(repairID) == "in_Progress":
-        setRepairCompleted(repairID, "completed")
-    else:
-        setRepairState(repairID, "completed")
-        #sendRejectEmail()
-    return(render_template("console.html", compliedData=toolkit.compileRequestData()))
+    if (getRepairAccepted(repairID) == 0 and getRepairRejected(repairID) == 0 and getRepairCompleted(repairID) == 0): # pending
+        setRepairAccepted(repairID, 0)
+        setRepairCompleted(repairID, 0)
+        setRepairRejected(repairID, 1)
+    elif (getRepairAccepted(repairID) == 1 and getRepairRejected(repairID) == 0 and getRepairCompleted(repairID) == 0): # in progress
+        # print
+        print("print")
+    elif (getRepairAccepted(repairID) == 0 and getRepairRejected(repairID) == 0 and getRepairCompleted(repairID) == 1):  # completed
+        # purge
+        setRepairAccepted(repairID, 1)
+        setRepairCompleted(repairID, 1)
+        setRepairRejected(repairID, 1)
+    elif (getRepairAccepted(repairID) == 0 and getRepairRejected(repairID) == 1 and getRepairCompleted(repairID) == 0): # rejected
+        # purge
+        setRepairAccepted(repairID, 1)
+        setRepairCompleted(repairID, 1)
+        setRepairRejected(repairID, 1)
+    return adminConsole()
 
 # end admin paths
 

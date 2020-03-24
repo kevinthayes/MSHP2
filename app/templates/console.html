@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -6,7 +6,7 @@
 
 		<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:900" rel="stylesheet">
 
-		<link rel="stylesheet" href="static/stylesheet.css">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheet.css') }}">
 
 		<title>NCHS Auto Shop</title>
 
@@ -21,9 +21,11 @@
 		<header>
 		</header>
 
+		<!-- ik this probably isn't the most efficient method of sorting the tasks by state but it works so -->
 		<section>
-			{% for requestData in compliedData %}
-			{% if requestData['utilityDerivedDisplayState'] == True %}
+			<h1>PENDING</h1>
+			{% for requestData in compiledData %}
+			{% if (requestData['location'] == 1) %}
 			<div class="request">
 				<div class="generics-wrapper">
 					<div class="vehicle">{{requestData['year']}} {{requestData['make']}} {{requestData['model']}} </div>
@@ -31,13 +33,82 @@
 					<div class="customer">{{requestData['name']}}</div>
 					<div class="information">{{requestData['type']}} : {{requestData['description']}}</div>
 				</div>
-				
+
 				<div class="button-wrapper">
-					<form action="/admin/L/{{requestData['utilityIdentifier']}}" method="POST">
-						<button class="multi-button {{requestData['utilityDerivedLeftState']}}" type="submit"></button>
+					<form action="{{url_for('index.adminConsole')}}/L/{{requestData['utilityIdentifier']}}" method="POST">
+						<button class="multi-button {{requestData['utilityDerivedLeftState']}}" name="buttontype" value="accept" type="submit"></button> <!-- accept -->
 					</form>
-					<form action="/admin/R/{{requestData['utilityIdentifier']}}" method="POST">
-						<button class="multi-button {{requestData['utilityDerivedRightState']}}" type="submit"></button>
+					<form action="{{url_for('index.adminConsole')}}/R/{{requestData['utilityIdentifier']}}" method="POST">
+						<button class="multi-button {{requestData['utilityDerivedRightState']}}" name="buttontype" value="reject" type="submit"></button> <!-- reject -->
+					</form>
+				</div>
+			</div>
+			{% endif %}
+			{% endfor %}
+
+			<h1>IN PROGRESS</h1>
+			{% for requestData in compiledData %}
+			{% if (requestData['location'] == 2) %}
+			<div class="request">
+				<div class="generics-wrapper">
+					<div class="vehicle">{{requestData['year']}} {{requestData['make']}} {{requestData['model']}} </div>
+					<div class="vin">{{requestData['VIN']}} {{'No VIN Provided' if requestData['VIN'] == ''}}</div>
+					<div class="customer">{{requestData['name']}}</div>
+					<div class="information">{{requestData['type']}} : {{requestData['description']}}</div>
+				</div>
+
+				<div class="button-wrapper">
+					<form action="{{url_for('index.adminConsole')}}/L/{{requestData['utilityIdentifier']}}" method="POST">
+						<button class="multi-button {{requestData['utilityDerivedLeftState']}}" name="buttontype" value="accept" type="submit"></button> <!-- accept -->
+					</form>
+					<form action="{{url_for('index.adminConsole')}}/R/{{requestData['utilityIdentifier']}}" method="POST">
+						<button class="multi-button {{requestData['utilityDerivedRightState']}}" name="buttontype" value="reject" type="submit"></button> <!-- reject -->
+					</form>
+				</div>
+			</div>
+			{% endif %}
+			{% endfor %}
+
+			<h1>COMPLETED</h1>
+			{% for requestData in compiledData %}
+			{% if (requestData['location'] == 3) %}
+			<div class="request">
+				<div class="generics-wrapper">
+					<div class="vehicle">{{requestData['year']}} {{requestData['make']}} {{requestData['model']}} </div>
+					<div class="vin">{{requestData['VIN']}} {{'No VIN Provided' if requestData['VIN'] == ''}}</div>
+					<div class="customer">{{requestData['name']}}</div>
+					<div class="information">{{requestData['type']}} : {{requestData['description']}}</div>
+				</div>
+
+				<div class="button-wrapper">
+					<form action="{{url_for('index.adminConsole')}}/L/{{requestData['utilityIdentifier']}}" method="POST">
+						<button class="multi-button {{requestData['utilityDerivedLeftState']}}" name="buttontype" value="accept" type="submit"></button> <!-- accept -->
+					</form>
+					<form action="{{url_for('index.adminConsole')}}/R/{{requestData['utilityIdentifier']}}" method="POST">
+						<button class="multi-button {{requestData['utilityDerivedRightState']}}" name="buttontype" value="reject" type="submit"></button> <!-- reject -->
+					</form>
+				</div>
+			</div>
+			{% endif %}
+			{% endfor %}
+
+			<h1>REJECTED</h1>
+			{% for requestData in compiledData %}
+			{% if (requestData['location'] == 4) %}
+			<div class="request">
+				<div class="generics-wrapper">
+					<div class="vehicle">{{requestData['year']}} {{requestData['make']}} {{requestData['model']}} </div>
+					<div class="vin">{{requestData['VIN']}} {{'No VIN Provided' if requestData['VIN'] == ''}}</div>
+					<div class="customer">{{requestData['name']}}</div>
+					<div class="information">{{requestData['type']}} : {{requestData['description']}}</div>
+				</div>
+
+				<div class="button-wrapper">
+					<form action="{{url_for('index.adminConsole')}}/L/{{requestData['utilityIdentifier']}}" method="POST">
+						<button class="multi-button {{requestData['utilityDerivedLeftState']}}" name="buttontype" value="accept" type="submit"></button> <!-- accept -->
+					</form>
+					<form action="{{url_for('index.adminConsole')}}/R/{{requestData['utilityIdentifier']}}" method="POST">
+						<button class="multi-button {{requestData['utilityDerivedRightState']}}" name="buttontype" value="reject" type="submit"></button> <!-- reject -->
 					</form>
 				</div>
 			</div>
