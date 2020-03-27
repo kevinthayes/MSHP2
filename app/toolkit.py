@@ -194,23 +194,12 @@ def setRepairAccepted(repID, accepted):
 def setRepairCompleted(repID, completed):
     mySQL = concantenate("repair", "completed", str(completed))
     query_db(mySQL, (int(repID),))
-    print(str(completed))
     return("status has been updated to " + str(completed))
 
 def setRepairRejected(repID, rejected):
     mySQL = concantenate("repair", "rejected", str(rejected))
     query_db(mySQL, (int(repID),))
     return("status has been updated to " + str(rejected))
-
-# idk why there are three setrepaircompleted methods that are exactly the same
-# def setRepairCompleted(repID, completed):
-#     mySQL = concantenate("repair", "completed", str(completed))
-#     query_db(mySQL, (int(repID),))
-#     return("status has been updated to " + str(completed))
-
-#def setRepairState(repID, status):
-#    mySQL = concantenate("repair","status",status)
-#    return("The repair is currently +"+ status)
 
 #THE CREATORS
 #These are how you insert new items into the database. These will...
@@ -325,7 +314,6 @@ def publish(formInfo):
    #Creates repair from validated form info
    createRepair(formInfo['repairType'],
                 formInfo['repairDescription'])
-   print("spic")
 
 #TESTER FUNCTIONS
 #For testing purposes only:
@@ -354,7 +342,6 @@ def compileRequestData():
     #Create list to be filled with dictionaries.
     compiledData = []
     #Derive utility states for left multi-button, right multi-button, and overall display state.
-    print(getRepairIds())
     for repairID in getRepairIds():
         U_DLS = "excluded"
         U_DRS = "excluded"
@@ -365,33 +352,6 @@ def compileRequestData():
         # 2: in progress
         # 3: rejected
         # 4: complete
-        # if getRepairAccepted(repairID) == 1:
-        #      if getRepairCompleted(repairID) == 1: # complete
-        #          U_DLS = "excluded"
-        #          U_DRS = "excluded"
-        #          U_DDS = False
-        #          location = 4
-        #      if getRepairCompleted(repairID) == 0: # in progress
-        #          U_DLS = "print"
-        #          U_DRS = "complete"
-        #          U_DDS = True
-        #          location = 2
-        # if getRepairAccepted(repairID) == 0:
-        #      if getRepairCompleted(repairID) == 1: # why is this here
-        #          U_DLS = "excluded"
-        #          U_DRS = "excluded"
-        #          U_DDS = False
-        #          location = 4
-        #      if getRepairCompleted(repairID) == 0: # pending
-        #          U_DLS = "accept"
-        #          U_DRS = "deny"
-        #          U_DDS = True
-        #          location = 1
-        # if getRepairRejected(repairID) == 1: # rejected
-        #     U_DLS = "restore"
-        #     U_DRS = "purge"
-        #     U_DDS = True
-        #     location = 3
 
         if getRepairAccepted(repairID) == 1: # in progress
             U_DLS = "complete"
@@ -419,7 +379,7 @@ def compileRequestData():
                     U_DRS = "deny"
                     U_DDS = True
                     location = 1
-        print(str(repairID), "r:", getRepairRejected(repairID), "a:", getRepairAccepted(repairID), "c:", getRepairCompleted(repairID), str(location), "\n")
+
         #Package request data and derived utility states into a dictionary.
         requestData = {
             "year" : getVehicleYear(getAssociatedVehicle(repairID)),

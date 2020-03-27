@@ -6,10 +6,6 @@ from app import validation
 from app import toolkit
 from flask import request
 from flask import flash
-from app.toolkit import setRepairCompleted
-from app.toolkit import getRepairCompleted
-from app.toolkit import setRepairAccepted
-from app.toolkit import getRepairAccepted
 #from app.toolkit import setRepairState
 #from app.toolkit import getRepairState
 bp = Blueprint("index", __name__)
@@ -136,6 +132,7 @@ def result():
 def adminConsole():
     return(render_template("console.html", compiledData=toolkit.compileRequestData()))
 
+# for the email stuff, i think we should return a function that returns a render_template with the email page (like in line 154, but with email)
 @bp.route("/admin/L/<repairID>", methods=['GET','POST'])
 def sinistra(repairID):
     if (getRepairAccepted(repairID) == 0 and getRepairRejected(repairID) == 0 and getRepairCompleted(repairID) == 0): # pending
