@@ -30,7 +30,7 @@ def response():
 
 #MADD RESPONSE FUNCTION TO INDEX AND SEE IF IT WORKS FROM THERE
 @app.route("/send")
-def index():
+def index(ccr, date, desc):
     msg = Message("hey lol wanna d8 me!",
                   sender = "nchs.autoshop@gmail.com",
                   recipients=["ddserrano@stu.naperville203.org"])
