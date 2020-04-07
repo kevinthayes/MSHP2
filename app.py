@@ -18,6 +18,26 @@ app.config['SECRET_KEY'] = 'superSecretGlobalKey'
 #Change the template directory for render_template
 template_dir = os.path.abspath("./app/templates")
 
+#Basically what you need to do is add the response.html as an actual route
+@app.route('/response.html', methods = ['POST'])
+def response():
+    if request.method == "POST":
+        req = request.form
+        ccr = "y" + req.get("CCR")
+        date = "e" + req['date']
+        desc = "s" + req['desc']
+        index()
+
+#MADD RESPONSE FUNCTION TO INDEX AND SEE IF IT WORKS FROM THERE
+@app.route("/send")
+def index():
+    msg = Message("hey lol wanna d8 me!",
+                  sender = "nchs.autoshop@gmail.com",
+                  recipients=["ddserrano@stu.naperville203.org"])
+    msg.body = "\n Do not respond to this email \n " + ccr + "When can you bring your car in? (Please make it within a week):" + date + "\nAlso:" + desc
+    mail.send(msg)
+    return "Sent"
+
 
 #Config SMTP with App
 with app.app_context():
