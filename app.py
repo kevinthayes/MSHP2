@@ -31,9 +31,9 @@ def response():
 #MADD RESPONSE FUNCTION TO INDEX AND SEE IF IT WORKS FROM THERE
 @app.route("/send")
 def index(ccr, date, desc):
-    msg = Message("hey lol wanna d8 me!",
+    msg = Message("y i k e s",
                   sender = "nchs.autoshop@gmail.com",
-                  recipients=["ddserrano@stu.naperville203.org"])
+                  recipients=["rsziegler@stu.naperville203.org"])
     msg.body = "\n Do not respond to this email \n " + ccr + "When can you bring your car in? (Please make it within a week):" + date + "\nAlso:" + desc
     mail.send(msg)
     return "Sent"
