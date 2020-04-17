@@ -10,6 +10,9 @@ from flask import flash
 #from app.toolkit import getRepairState
 bp = Blueprint("index", __name__)
 from app.toolkit import *
+from flask_mail import Mail, Message
+from app import create_app
+import os
 
 # PATHS ------------------------------------------------------------------------------------------------------
 
@@ -126,6 +129,30 @@ def result():
 #     #email template can be found at app/templates/testEmail.html
 #     sendEmail("This is a test email!", render_template("testEmail.html"), "spkudrna@gmail.com")
 #     return("email test succefully fired, check target inbox.")
+
+#Change the template directory for render_template
+template_dir = os.path.abspath("./app/templates")
+
+#Basically what you need to do is add the response.html as an actual route
+@bp.route('/response', methods = ['GET','POST'])
+def response():
+    if request.method == "POST":
+        req = request.form
+        ccr = "y" + req.get("CCR")
+        date = "e" + req['date']
+        desc = "s" + req['desc']
+        return send(ccr, date, desc)
+    return render_template("response.html")
+
+#MADD RESPONSE FUNCTION TO INDEX AND SEE IF IT WORKS FROM THERE
+@bp.route("/send")
+def send(ccr, date, desc):
+    msg = Message("y i k e s",
+                  sender = "nchs.autoshop@gmail.com",
+                  recipients=["rsziegler@stu.naperville203.org"])
+    msg.body = "\n Do not respond to this email \n " + ccr + "When can you bring your car in? (Please make it within a week):" + date + "\nAlso:" + desc
+    Mail.send(msg)
+    return render_template("response.html")
 
 # admin console routes
 @bp.route("/admin")
