@@ -15,6 +15,7 @@ app.config['SECRET_KEY'] = 'superSecretGlobalKey'
 
 
 
+
 #Change the template directory for render_template
 #template_dir = os.path.abspath("./app/templates")
 
