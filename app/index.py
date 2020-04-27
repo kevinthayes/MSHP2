@@ -153,8 +153,8 @@ def response():
     if request.method == "POST":
         req = request.form
         ccr = "y" + req.get("CCR")
-        date = "e" + req['date']
-        desc = "s" + req['desc']
+        date = "e" + req.get('date')
+        desc = "s" + req.get('desc')
         return sent(ccr, date, desc)
     return render_template("response.html")
 
@@ -165,7 +165,7 @@ def sent(ccr, date, desc):
                   sender = "nchs.autoshop@gmail.com",
                   recipients=["rsziegler@stu.naperville203.org"])
     msg.body = "\n Do not respond to this email \n " + ccr + "When can you bring your car in? (Please make it within a week):" + date + "\nAlso:" + desc
-    mail.send(msg)
+    mail.send(msg) # something wrong here?
     return render_template("response.html")
 
 # admin console routes
