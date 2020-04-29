@@ -158,14 +158,14 @@ def response():
         return sent(ccr, date, desc)
     return render_template("response.html")
 
-#MADD RESPONSE FUNCTION TO INDEX AND SEE IF IT WORKS FROM THERE
+# MADD RESPONSE FUNCTION TO INDEX AND SEE IF IT WORKS FROM THERE
 @bp.route("/sent")
 def sent(ccr, date, desc):
     msg = Message("y i k e s",
                   sender = "nchs.autoshop@gmail.com",
                   recipients=["rsziegler@stu.naperville203.org"])
     msg.body = "\n Do not respond to this email \n " + ccr + "When can you bring your car in? (Please make it within a week):" + date + "\nAlso:" + desc
-    mail.send(msg) # something wrong here?
+    mail.send(msg)  # something wrong here?
     return render_template("response.html")
 
 # admin console routes
