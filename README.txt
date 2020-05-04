@@ -54,6 +54,8 @@ templates (folder)
 		email template that the administrator fills out for when the job is rejected
 	finished.html
 		email template that the administrator fills out for when the job is finished
+	txt.py
+		makes file that Mr. Feid uses to print. No need for a pdf when its easier to add the parts of the form to a .txt file
 		
 
 
@@ -92,8 +94,6 @@ CHANGES FOR THE FUTURE:
 	- Pressing Accept/Reject should update the Accept/Reject boolean in the database.
 	- Pressing Reject and sending the email should remove the particular request from the admin console and move it to the archive
 	- Pressing Accept and sending the email should switch the button to completed and offer Mr. Feid a way to print the manual form he needs to print.
-- PDF Form Functionality (theere is some backend for these things.)
-	- Mr. Feid should be able to print the form (that one he needs in triplicate) or download the form.
 - Additional Things (There is currently no backend created for these things):
 	- Security Implementations: 
 		- Login to the admin console should exist.
