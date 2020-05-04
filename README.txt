@@ -1,6 +1,9 @@
 PROJECT OVERVIEW:
 The purpose of this project is to create a functional autoshop website through which potential customers can insert their information and requested repairs, and through which the website administrator can accept and reject these repairs, mark them finished, (and or recover the repairs if they're rejected) send emails informing customers of the state of their repair requests, and print the necessary forms surrounding the repairs.
 
+IMPORTANT:
+Different branches still need to be implemented.They exist in different branches so that it doesnt mess up the master branch code, which we upload onto pythonanywhere.com
+
 IMPORTS: BareNecessities and Mail
 
 FILES AND THEIR PURPOSE:
