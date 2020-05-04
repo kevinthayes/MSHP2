@@ -74,7 +74,8 @@ SEQUENTIAL INSTALLATION INSTRUCTIONS:
 
 INSTALL FROM GITHUB:
 	Ask Mr. Hayes for the github repo url -- he should have been made owner. If not, it’s called MSHP. Good luck finding that (it stands for Magical Sparkly Handheld Polyhedrons, but that was too long.)
-
+	
+History: Made by MSHP team in 2019, picked up by CDKT team in 2020. 
 
 USING PROJECT:
 	How to configure the project:
