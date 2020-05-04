@@ -24,7 +24,7 @@ app (folder)
 	database.py
 		This is the file in which the python methods exist that you can use to interact with the database. The imports are sqlite3, click, os, from flask import current_app, g, from flask.cli import with_appcontext. The methods are get_db(), query_db(query, args=(), one=False), close_db(exception=None), init_db(), init_app(myApp), inidb_command()
 	index.py
-		This is the file that was used to test the code, specifically the database code. You can write testing methods with special Flask code, but it’s kind of a pain in the butt, so it’s just easier to create a route and call that to test  your stuff.
+		This is the file that was used to test the code, specifically the database code. You can write testing methods with special Flask code, but it’s kind of a pain in the butt, so it’s just easier to create a route and call that to test  your stuff. Also, it adds the email implementation. When a button is pressed by the Admin, index.py routes you to the specific html form that needs to be filled out. Once filled out, it gets the code from the html form and puts it into an email and returns response.html
         Routing
             How to naviate between pages on the website.
 	__init__.py
@@ -82,9 +82,12 @@ USING PROJECT:
 		Log into pythonanywhere.com
 			user: nchsautoshop
 			password: Redhawks2020
+		Sometime in February, we bought a full year subscription. it should be able to run next year. Once the subscription ends, it's going to have to be renewed
+		
 	How to run the project:
 		If you have the website running, type in nchsautoshop.pythonanywhere.com (so far)
-		
+	
+Notes:		
 		
 	
 		
