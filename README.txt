@@ -98,4 +98,14 @@ CHANGES FOR THE FUTURE:
 	- Security Implementations: 
 		- Login to the admin console should exist.
 		- Security features should be investigated and implemented.
-	
+
+Note for the email functionality: it's almost functional but a little buggy. what you have to do to reroute it after the button is pressed in sinstra and destra
+
+example:
+def sinistra(repairID):
+    if (getRepairAccepted(repairID) == 0 and getRepairRejected(repairID) == 0 and getRepairCompleted(repairID) == 0): # pending
+        setRepairAccepted(repairID, 1)
+        setRepairCompleted(repairID, 0)
+        setRepairRejected(repairID, 0)
+        response() # this is what will reroute to the email page, which still doesn't work but should not be too hard to debug
+     ...
