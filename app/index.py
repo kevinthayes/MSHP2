@@ -10,7 +10,24 @@ from flask import flash
 #from app.toolkit import getRepairState
 bp = Blueprint("index", __name__)
 from app.toolkit import *
+from flask_mail import Mail, Message
+from app import create_app
+import os
+from app import create_app
 
+app = create_app()
+app.config['SECRET_KEY'] = 'superSecretGlobalKey'
+#Config SMTP with App
+with app.app_context():
+    mail = Mail(app)
+    app.config['MAIL_SERVER'] = 'smtp.gmail.com' #This sends requst to google
+    app.config['MAIL_PORT'] = 465 #This is required for the server
+    app.config['MAIL_USERNAME'] = 'nchs.autoshop@gmail.com' #Associates sender address
+    app.config['MAIL_PASSWORD'] = 'nchsautowebsite' #Validates sender with password
+    app.config['MAIL_USE_TLS'] = False
+    app.config['MAIL_USE_SSL'] = True
+    mail = Mail(app)
+    print("See")
 # PATHS ------------------------------------------------------------------------------------------------------
 
 #Way to fake-instantiate the database
@@ -126,6 +143,30 @@ def result():
 #     #email template can be found at app/templates/testEmail.html
 #     sendEmail("This is a test email!", render_template("testEmail.html"), "spkudrna@gmail.com")
 #     return("email test succefully fired, check target inbox.")
+
+#Change the template directory for render_template
+template_dir = os.path.abspath("./app/templates")
+
+#Basically what you need to do is add the response.html as an actual route
+@bp.route('/response', methods = ['GET','POST'])
+def response():
+    if request.method == "POST":
+        req = request.form
+        ccr = "y" + req.get("CCR")
+        date = "e" + req.get('date')
+        desc = "s" + req.get('desc')
+        return sent(ccr, date, desc)
+    return render_template("response.html")
+
+# MADD RESPONSE FUNCTION TO INDEX AND SEE IF IT WORKS FROM THERE
+@bp.route("/sent")
+def sent(ccr, date, desc):
+    msg = Message("y i k e s",
+                  sender = "nchs.autoshop@gmail.com",
+                  recipients=["rsziegler@stu.naperville203.org"])
+    msg.body = "\n Do not respond to this email \n " + ccr + "When can you bring your car in? (Please make it within a week):" + date + "\nAlso:" + desc
+    mail.send(msg)  # something wrong here?
+    return render_template("response.html")
 
 # admin console routes
 @bp.route("/admin")
